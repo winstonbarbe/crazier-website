@@ -20,7 +20,7 @@
         <a href="">Merch</a>
         <a href="">Music</a>
         <a href="">Merch</a>
-        <a href="">Music</a>
+        <a href="#" id="contactButton">Contact</a>
       </div>
       <div class="center-header">
         <a href="#"><h1>Crazier</h1></a>
@@ -139,7 +139,7 @@
           <a href="">Merch</a>
           <a href="">Music</a>
           <a href="">Merch</a>
-          <a href="">Music</a>
+          <a href="#" class="contact-button-mobile">Contact</a>
         </div>
         <div class="mobile-menu-right">
           <a href="https://www.reddit.com/r/Crazier/">
@@ -241,6 +241,109 @@
         </div>
       </nav>
     </div>
+    <div class="popup-overlay" id="mailingListPopup">
+      <div class="popup-modal">
+        <button class="popup-close" aria-label="Close popup">&times;</button>
+        <div class="newsletter">
+          <h2>Join the Crazier mailing list</h2>
+          <form id="email-form">
+            <div class="hp-field" aria-hidden="true">
+              <label>Leave this field empty</label>
+              <input
+                type="text"
+                name="nickname"
+                autocomplete="off"
+                tabindex="-1"
+              />
+            </div>
+            <input
+              type="email"
+              name="email"
+              placeholder="you@example.com"
+              required
+            />
+            <button type="submit">Sign up</button>
+          </form>
+          <div id="msg" class="msg"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycby_Gwlt7t80I2JsMBRrl912smKGDqY8wJEt2Fq4dCmexudERTNEfr4y2xI2vHyLzEwW/exec";
+
+      const form = document.getElementById("email-form");
+      const msg = document.getElementById("msg");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        msg.textContent = "Submitting…";
+        msg.className = "msg";
+
+        const formData = new FormData(form);
+
+        try {
+          const res = await fetch(scriptURL, {
+            method: "POST",
+            body: formData,
+          });
+
+          // Google Apps Script may return 200 even on errors, so check content type
+          const contentType = res.headers.get("content-type");
+          let data;
+
+          if (contentType && contentType.includes("application/json")) {
+            data = await res.json();
+          } else {
+            // If not JSON, try to parse as text first
+            const text = await res.text();
+            try {
+              data = JSON.parse(text);
+            } catch (e) {
+              // If parsing fails, treat as error
+              msg.textContent = "Server error. Try again later.";
+              msg.classList.add("error");
+              return;
+            }
+          }
+
+          // Handle different status responses
+          if (data.status === "subscribed") {
+            msg.textContent = "Thanks for signing up";
+            msg.classList.add("success");
+            form.reset();
+          } else if (data.status === "already_subscribed") {
+            msg.textContent = "Thanks, but you've already signed up";
+            msg.classList.add("success");
+            form.reset();
+          } else if (data.status === "invalid_email") {
+            msg.textContent = "Please enter a valid email address";
+            msg.classList.add("error");
+          } else if (data.status === "ok") {
+            // Honeypot triggered (bot), silently succeed
+            msg.textContent = "Thanks for signing up";
+            msg.classList.add("success");
+            form.reset();
+          } else {
+            // Fallback: check for old result format or show error
+            if (data.result === "success") {
+              msg.textContent = "Thanks for signing up";
+              msg.classList.add("success");
+              form.reset();
+            } else {
+              msg.textContent =
+                data.message || "Something went wrong. Please try again.";
+              msg.classList.add("error");
+            }
+          }
+        } catch (err) {
+          console.error("Form submission error:", err);
+          msg.textContent = "Network error. Try again later.";
+          msg.classList.add("error");
+        }
+      });
+    </script>
     <script src="script.js"></script>
   </body>
 </html>

@@ -49,3 +49,59 @@ window.addEventListener("resize", () => {
     closeMenu();
   }
 });
+
+// Mailing list popup
+const mailingListPopup = document.getElementById("mailingListPopup");
+const popupClose = document.querySelector(".popup-close");
+
+function closePopup() {
+  if (mailingListPopup) {
+    mailingListPopup.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+}
+
+function openPopup() {
+  if (mailingListPopup) {
+    mailingListPopup.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+}
+
+// Show popup after 3 seconds
+setTimeout(() => {
+  openPopup();
+}, 3000);
+
+// Close popup when clicking close button
+if (popupClose) {
+  popupClose.addEventListener("click", closePopup);
+}
+
+// Close popup when clicking outside
+if (mailingListPopup) {
+  mailingListPopup.addEventListener("click", (e) => {
+    if (e.target === mailingListPopup) {
+      closePopup();
+    }
+  });
+}
+
+// Reopen popup when clicking Contact button
+const contactButton = document.getElementById("contactButton");
+const contactButtonMobile = document.querySelector(".contact-button-mobile");
+
+if (contactButton) {
+  contactButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    openPopup();
+  });
+}
+
+if (contactButtonMobile) {
+  contactButtonMobile.addEventListener("click", (e) => {
+    e.preventDefault();
+    closeMenu(); // Close mobile menu first
+    openPopup();
+  });
+}
