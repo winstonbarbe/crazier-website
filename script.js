@@ -87,9 +87,11 @@ if (mailingListPopup) {
   });
 }
 
-// Reopen popup when clicking Contact button
+// Reopen popup when clicking Subscribe button
 const contactButton = document.getElementById("contactButton");
-const contactButtonMobile = document.querySelector(".contact-button-mobile");
+const subscribeButtonMobile = document.querySelector(
+  ".subscribe-button-mobile"
+);
 
 if (contactButton) {
   contactButton.addEventListener("click", (e) => {
@@ -98,8 +100,8 @@ if (contactButton) {
   });
 }
 
-if (contactButtonMobile) {
-  contactButtonMobile.addEventListener("click", (e) => {
+if (subscribeButtonMobile) {
+  subscribeButtonMobile.addEventListener("click", (e) => {
     e.preventDefault();
     closeMenu(); // Close mobile menu first
     openPopup();
