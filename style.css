@@ -10,6 +10,7 @@ body {
   background-size: cover;
   margin: 0;
   padding: 0;
+  font-family: "Geom", sans-serif;
 }
 
 header {
@@ -31,6 +32,7 @@ a {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  gap: 1rem;
 }
 
 .right-header {
@@ -44,6 +46,12 @@ a {
 .left-header a {
   display: flex;
   align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.right-header a:hover,
+.left-header a:hover {
+  opacity: 0.5;
 }
 
 .right-header svg,
@@ -146,6 +154,11 @@ a {
   font-size: 1.5rem;
   font-weight: 500;
   line-height: 1.2;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-menu-left a:hover {
+  opacity: 0.5;
 }
 
 .mobile-menu-right {
@@ -159,6 +172,11 @@ a {
 .mobile-menu-right a {
   display: flex;
   align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-menu-right a:hover {
+  opacity: 0.5;
 }
 
 .mobile-menu-right svg {
