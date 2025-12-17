@@ -57,14 +57,12 @@ const popupClose = document.querySelector(".popup-close");
 function closePopup() {
   if (mailingListPopup) {
     mailingListPopup.classList.remove("active");
-    document.body.style.overflow = "";
   }
 }
 
 function openPopup() {
   if (mailingListPopup) {
     mailingListPopup.classList.add("active");
-    document.body.style.overflow = "hidden";
   }
 }
 
@@ -105,5 +103,14 @@ if (subscribeButtonMobile) {
     e.preventDefault();
     closeMenu(); // Close mobile menu first
     openPopup();
+  });
+}
+
+// Ensure footer contact link works
+const footerContact = document.getElementById("footerContact");
+if (footerContact) {
+  footerContact.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.href = "mailto:wtf.crazier@gmail.com?subject=Contact";
   });
 }
