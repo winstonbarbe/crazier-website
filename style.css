@@ -159,7 +159,10 @@ a {
   top: calc(1rem + 100px);
   left: 0;
   width: 100%;
-  height: calc(100vh - (1rem + 100px));
+  height: calc(100dvh - (1rem + 100px));
+  height: calc(100vh - (1rem + 100px)); /* Fallback for older browsers */
+  max-height: calc(100dvh - (1rem + 100px));
+  max-height: calc(100vh - (1rem + 100px)); /* Fallback */
   background: white;
   z-index: 1000;
   display: flex;
@@ -168,6 +171,8 @@ a {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .mobile-menu-overlay.active {
@@ -178,11 +183,12 @@ a {
 .mobile-menu {
   display: flex;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   padding: 2rem 2rem 5rem 2rem;
   align-items: flex-end;
   justify-content: space-between;
   gap: 2rem;
+  box-sizing: border-box;
 }
 
 .mobile-menu-left {
@@ -247,6 +253,12 @@ a {
   .center-header {
     justify-self: start;
   }
+
+  .mobile-menu-overlay {
+    top: calc(1rem + 100px);
+    height: calc(100dvh - (1rem + 100px));
+    max-height: calc(100dvh - (1rem + 100px));
+  }
 }
 
 /* Small mobile - stack menu vertically */
@@ -264,6 +276,10 @@ a {
 
   .close-label {
     display: none;
+  }
+
+  .mobile-menu {
+    padding: 2rem 2rem 2rem 2rem;
   }
 }
 
