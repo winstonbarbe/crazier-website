@@ -87,6 +87,7 @@ a {
   padding: 0;
   z-index: 1001;
   position: relative;
+  color: #000;
 }
 
 .menu-toggle img {
@@ -123,6 +124,7 @@ a {
   font-size: 0.9rem;
   transition: opacity 0.3s ease, visibility 0.3s ease;
   margin-right: 0.5rem;
+  color: #000;
 }
 
 .menu-label {
@@ -244,6 +246,24 @@ a {
 
   .center-header {
     justify-self: start;
+  }
+}
+
+/* Small mobile - stack menu vertically */
+@media (max-width: 460px) {
+  .menu-toggle {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .menu-label {
+    order: -1;
+    margin-right: 0;
+    margin-bottom: 0.25rem;
+  }
+
+  .close-label {
+    display: none;
   }
 }
 
