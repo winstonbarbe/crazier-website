@@ -311,7 +311,7 @@ main img.no-animation:hover {
     grid-template-columns: 1fr auto;
     justify-content: space-between;
     padding: 0.5rem;
-    margin: 0.5rem;
+    margin: 0;
     height: 60px;
   }
 
@@ -324,13 +324,13 @@ main img.no-animation:hover {
   }
 
   .mobile-menu-overlay {
-    top: calc(0.5rem + 60px);
-    height: calc(100dvh - (0.5rem + 60px));
-    max-height: calc(100dvh - (0.5rem + 60px));
+    top: 60px;
+    height: calc(100dvh - 60px);
+    max-height: calc(100dvh - 60px);
   }
 
   main {
-    padding: 0.5rem 1rem;
+    padding: 0 1rem;
     min-height: calc(100vh - 150px);
   }
 
