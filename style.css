@@ -310,20 +310,27 @@ main img.no-animation:hover {
   header {
     grid-template-columns: 1fr auto;
     justify-content: space-between;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    height: 60px;
   }
 
   .center-header {
     justify-self: start;
   }
 
+  .center-header .logo-image {
+    max-height: 50px;
+  }
+
   .mobile-menu-overlay {
-    top: calc(1rem + 100px);
-    height: calc(100dvh - (1rem + 100px));
-    max-height: calc(100dvh - (1rem + 100px));
+    top: calc(0.5rem + 60px);
+    height: calc(100dvh - (0.5rem + 60px));
+    max-height: calc(100dvh - (0.5rem + 60px));
   }
 
   main {
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     min-height: calc(100vh - 150px);
   }
 
