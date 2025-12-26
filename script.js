@@ -54,19 +54,93 @@ window.addEventListener("resize", () => {
 const mailingListPopup = document.getElementById("mailingListPopup");
 const popupClose = document.querySelector(".popup-close");
 
+// LocalStorage keys
+const POPUP_CLOSE_COUNT_KEY = "popupCloseCount";
+const POPUP_HIDDEN_UNTIL_KEY = "popupHiddenUntil";
+const ALREADY_SUBSCRIBED_KEY = "alreadySubscribed";
+
+// Get popup close count from localStorage
+function getPopupCloseCount() {
+  const count = localStorage.getItem(POPUP_CLOSE_COUNT_KEY);
+  return count ? parseInt(count, 10) : 0;
+}
+
+// Increment popup close count
+function incrementPopupCloseCount() {
+  const currentCount = getPopupCloseCount();
+  const newCount = currentCount + 1;
+  localStorage.setItem(POPUP_CLOSE_COUNT_KEY, newCount.toString());
+  
+  // If closed twice, set hidden until timestamp (24 hours from now)
+  if (newCount >= 2) {
+    const hiddenUntil = Date.now() + 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    localStorage.setItem(POPUP_HIDDEN_UNTIL_KEY, hiddenUntil.toString());
+  }
+}
+
+// Reset popup tracking (when subscribe button is clicked or form is submitted)
+function resetPopupTracking() {
+  localStorage.removeItem(POPUP_CLOSE_COUNT_KEY);
+  localStorage.removeItem(POPUP_HIDDEN_UNTIL_KEY);
+}
+
+// Expose resetPopupTracking globally so it can be called from HTML form handlers
+window.resetPopupTracking = resetPopupTracking;
+
+// Check if user has marked themselves as already subscribed
+function isAlreadySubscribed() {
+  return localStorage.getItem(ALREADY_SUBSCRIBED_KEY) === "true";
+}
+
+// Set already subscribed preference
+function setAlreadySubscribed(value) {
+  if (value) {
+    localStorage.setItem(ALREADY_SUBSCRIBED_KEY, "true");
+  } else {
+    localStorage.removeItem(ALREADY_SUBSCRIBED_KEY);
+  }
+}
+
+// Check if popup should be shown
+function shouldShowPopup() {
+  // First check if user has marked themselves as already subscribed
+  if (isAlreadySubscribed()) {
+    return false;
+  }
+  
+  // Check if popup is hidden until a certain time
+  const hiddenUntil = localStorage.getItem(POPUP_HIDDEN_UNTIL_KEY);
+  if (hiddenUntil) {
+    const hiddenUntilTime = parseInt(hiddenUntil, 10);
+    const now = Date.now();
+    
+    // If still within the hidden period, don't show
+    if (now < hiddenUntilTime) {
+      return false;
+    } else {
+      // Time has passed, reset the tracking
+      resetPopupTracking();
+    }
+  }
+  
+  return true;
+}
+
 function closePopup() {
   if (mailingListPopup) {
     mailingListPopup.classList.remove("active");
+    // Track the close action
+    incrementPopupCloseCount();
   }
 }
 
 function openPopup() {
-  if (mailingListPopup) {
+  if (mailingListPopup && shouldShowPopup()) {
     mailingListPopup.classList.add("active");
   }
 }
 
-// Show popup after 3 seconds
+// Show popup after 3 seconds (only if it should be shown)
 setTimeout(() => {
   openPopup();
 }, 3000);
@@ -101,7 +175,14 @@ const subscribeButtonMobile = document.querySelector(
 if (contactButton) {
   contactButton.addEventListener("click", (e) => {
     e.preventDefault();
-    openPopup();
+    // Remove "already subscribed" preference when subscribe button is clicked
+    setAlreadySubscribed(false);
+    // Update checkbox state if it exists
+    if (alreadySubscribedCheckbox) {
+      alreadySubscribedCheckbox.checked = false;
+    }
+    resetPopupTracking(); // Reset tracking when subscribe button is clicked
+    openPopup(); // Always show popup when subscribe button is clicked
   });
 }
 
@@ -109,7 +190,32 @@ if (subscribeButtonMobile) {
   subscribeButtonMobile.addEventListener("click", (e) => {
     e.preventDefault();
     closeMenu(); // Close mobile menu first
-    openPopup();
+    // Remove "already subscribed" preference when subscribe button is clicked
+    setAlreadySubscribed(false);
+    // Update checkbox state if it exists
+    if (alreadySubscribedCheckbox) {
+      alreadySubscribedCheckbox.checked = false;
+    }
+    resetPopupTracking(); // Reset tracking when subscribe button is clicked
+    openPopup(); // Always show popup when subscribe button is clicked
+  });
+}
+
+// Handle "Already subscribed?" checkbox
+const alreadySubscribedCheckbox = document.getElementById("alreadySubscribedCheckbox");
+if (alreadySubscribedCheckbox) {
+  // Set initial state from localStorage
+  alreadySubscribedCheckbox.checked = isAlreadySubscribed();
+  
+  // Handle checkbox change
+  alreadySubscribedCheckbox.addEventListener("change", (e) => {
+    const isChecked = e.target.checked;
+    setAlreadySubscribed(isChecked);
+    
+    // If checked, close the popup immediately
+    if (isChecked && mailingListPopup) {
+      closePopup();
+    }
   });
 }
 

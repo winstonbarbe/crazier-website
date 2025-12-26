@@ -359,6 +359,16 @@
               required
             />
             <button type="submit">Sign up</button>
+            <div class="already-subscribed-option">
+              <label>
+                <input
+                  type="checkbox"
+                  id="alreadySubscribedCheckbox"
+                  name="alreadySubscribed"
+                />
+                Already subscribed?
+              </label>
+            </div>
           </form>
           <div id="msg" class="msg"></div>
         </div>
@@ -428,10 +438,18 @@
             msg.textContent = "Thanks for signing up";
             msg.classList.add("success");
             form.reset();
+            // Reset popup tracking when successfully subscribed
+            if (window.resetPopupTracking) {
+              window.resetPopupTracking();
+            }
           } else if (data.status === "already_subscribed") {
             msg.textContent = "Thanks, but you've already signed up";
             msg.classList.add("success");
             form.reset();
+            // Reset popup tracking when already subscribed
+            if (window.resetPopupTracking) {
+              window.resetPopupTracking();
+            }
           } else if (data.status === "invalid_email") {
             msg.textContent = "Please enter a valid email address";
             msg.classList.add("error");
@@ -440,12 +458,20 @@
             msg.textContent = "Thanks for signing up";
             msg.classList.add("success");
             form.reset();
+            // Reset popup tracking when successfully subscribed
+            if (window.resetPopupTracking) {
+              window.resetPopupTracking();
+            }
           } else {
             // Fallback: check for old result format or show error
             if (data.result === "success") {
               msg.textContent = "Thanks for signing up";
               msg.classList.add("success");
               form.reset();
+              // Reset popup tracking when successfully subscribed
+              if (window.resetPopupTracking) {
+                window.resetPopupTracking();
+              }
             } else {
               msg.textContent =
                 data.message || "Something went wrong. Please try again.";

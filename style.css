@@ -481,6 +481,27 @@ main img.no-animation:hover {
   opacity: 0.5;
 }
 
+.already-subscribed-option {
+  margin-top: 0.5rem;
+}
+
+.already-subscribed-option label {
+  font-family: "Geom", sans-serif;
+  font-size: 0.9rem;
+  color: #000;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.already-subscribed-option input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+  accent-color: #000;
+}
+
 .msg {
   margin-top: 1rem;
   text-align: center;
