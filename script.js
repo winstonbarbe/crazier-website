@@ -85,6 +85,13 @@ if (mailingListPopup) {
   });
 }
 
+// Close popup when pressing ESC key
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && mailingListPopup && mailingListPopup.classList.contains("active")) {
+    closePopup();
+  }
+});
+
 // Reopen popup when clicking Subscribe button
 const contactButton = document.getElementById("contactButton");
 const subscribeButtonMobile = document.querySelector(
