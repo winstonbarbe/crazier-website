@@ -10,6 +10,14 @@
       name="description"
       content="Crazier — upcoming shows and tour dates."
     />
+    <meta
+      name="keywords"
+      content="Crazier, shows, concerts, tour dates, live music, Athens GA"
+    />
+    <meta name="author" content="Crazier" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.crazier.wtf/shows" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="icon" href="../assets/icons/favicon-2.png" type="image/png" />
 
     <!-- Open Graph (iMessage, Slack, Facebook, Discord, Bluesky) -->
@@ -52,6 +60,33 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../style.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://www.crazier.wtf/#website",
+            "name": "Crazier",
+            "url": "https://www.crazier.wtf/"
+          },
+          {
+            "@type": "MusicGroup",
+            "@id": "https://www.crazier.wtf/#musicgroup",
+            "name": "Crazier",
+            "url": "https://www.crazier.wtf/",
+            "image": "https://www.crazier.wtf/assets/share.jpg",
+            "sameAs": [
+              "https://crazier.bandcamp.com/",
+              "https://wtf-crazier.bsky.social",
+              "https://www.youtube.com/@wtf.crazier",
+              "https://www.reddit.com/r/crazier/"
+            ],
+            "email": "mailto:wtf.crazier@gmail.com"
+          }
+        ]
+      }
+    </script>
     <style>
       /* Shows page specific styling - background image */
       main .newsletter {
@@ -152,7 +187,7 @@
       </div>
       <div class="center-header">
         <a href="/">
-          <!-- <h1>Crazier</h1> -->
+          <h1 class="visually-hidden">Crazier</h1>
           <img
             class="logo-image"
             src="../assets/logos/crazier-handwritten-font.png"
@@ -277,6 +312,7 @@
       <div>
         <div>
           <div class="newsletter">
+            <h1 class="visually-hidden">Shows - Crazier</h1>
             <h2>We are booking shows now</h2>
             <p>
               Email us to book:
