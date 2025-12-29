@@ -73,6 +73,12 @@
         ]
       }
     </script>
+    <!-- Privacy-friendly analytics by Plausible -->
+    <script async src="https://plausible.io/js/pa-X0oJC14JieIB4wVlXgRJ4.js"></script>
+    <script>
+      window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+      plausible.init()
+    </script>
   </head>
 
   <body>
@@ -209,15 +215,31 @@
     <main>
       <div>
         <div>
-          <p style="font-size: 1.5rem; margin-bottom: 1rem">
-            Under Construction
-          </p>
-          <p>Merch coming soon!</p>
-          <img
-            class="main-image no-animation"
-            src="../assets/photos/underConstruction.jpg"
-            alt="Under construction"
-          />
+          <div class="newsletter">
+            <h2>Merch Coming Soon!</h2>
+            <p>
+              Join now to get first dibs on new merch drops
+            </p>
+            <form id="merch-email-form" class="email-signup-form">
+              <div class="hp-field" aria-hidden="true">
+                <label>Leave this field empty</label>
+                <input
+                  type="text"
+                  name="nickname"
+                  autocomplete="off"
+                  tabindex="-1"
+                />
+              </div>
+              <input
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                required
+              />
+              <button type="submit">Sign up</button>
+            </form>
+            <div id="merch-msg" class="msg"></div>
+          </div>
         </div>
       </div>
     </main>
@@ -333,43 +355,6 @@
         </div>
       </nav>
     </div>
-    <div class="popup-overlay" id="mailingListPopup">
-      <div class="popup-modal">
-        <button class="popup-close" aria-label="Close popup">&times;</button>
-        <div class="newsletter">
-          <h2>Join the Crazier mailing list</h2>
-          <form id="email-form">
-            <div class="hp-field" aria-hidden="true">
-              <label>Leave this field empty</label>
-              <input
-                type="text"
-                name="nickname"
-                autocomplete="off"
-                tabindex="-1"
-              />
-            </div>
-            <input
-              type="email"
-              name="email"
-              placeholder="you@example.com"
-              required
-            />
-            <button type="submit">Sign up</button>
-            <div class="already-subscribed-option">
-              <label>
-                <input
-                  type="checkbox"
-                  id="alreadySubscribedCheckbox"
-                  name="alreadySubscribed"
-                />
-                Already subscribed?
-              </label>
-            </div>
-          </form>
-          <div id="msg" class="msg"></div>
-        </div>
-      </div>
-    </div>
 
     <footer>
       <div class="footer-content">
@@ -394,15 +379,22 @@
       const scriptURL =
         "https://script.google.com/macros/s/AKfycby_Gwlt7t80I2JsMBRrl912smKGDqY8wJEt2Fq4dCmexudERTNEfr4y2xI2vHyLzEwW/exec";
 
-      const form = document.getElementById("email-form");
-      const msg = document.getElementById("msg");
+      // Handle all email forms on the page
+      const forms = document.querySelectorAll(".email-signup-form");
+      
+      forms.forEach((form) => {
+        // Find the associated message div (closest .newsletter container, then find .msg)
+        const newsletterContainer = form.closest(".newsletter");
+        const msg = newsletterContainer ? newsletterContainer.querySelector(".msg") : null;
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        msg.textContent = "Submitting…";
-        msg.className = "msg";
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          if (msg) {
+            msg.textContent = "Submitting…";
+            msg.className = "msg";
+          }
 
-        const formData = new FormData(form);
+          const formData = new FormData(form);
 
         try {
           const res = await fetch(scriptURL, {
@@ -423,36 +415,52 @@
               data = JSON.parse(text);
             } catch (e) {
               // If parsing fails, treat as error
-              msg.textContent = "Server error. Try again later.";
-              msg.classList.add("error");
+              if (msg) {
+                msg.textContent = "Server error. Try again later.";
+                msg.classList.add("error");
+              }
               return;
             }
           }
 
+          // Check if this is the merch page form (has "Merch Coming Soon!" heading nearby)
+          const isMerchForm = newsletterContainer && newsletterContainer.querySelector("h2")?.textContent.includes("Merch Coming Soon");
+          const successMessage = isMerchForm 
+            ? "Thanks for signing up! You'll be the first to know when merch drops."
+            : "Thanks for signing up";
+
           // Handle different status responses
           if (data.status === "subscribed") {
-            msg.textContent = "Thanks for signing up";
-            msg.classList.add("success");
+            if (msg) {
+              msg.textContent = successMessage;
+              msg.classList.add("success");
+            }
             form.reset();
             // Reset popup tracking when successfully subscribed
             if (window.resetPopupTracking) {
               window.resetPopupTracking();
             }
           } else if (data.status === "already_subscribed") {
-            msg.textContent = "Thanks, but you've already signed up";
-            msg.classList.add("success");
+            if (msg) {
+              msg.textContent = "Thanks, but you've already signed up";
+              msg.classList.add("success");
+            }
             form.reset();
             // Reset popup tracking when already subscribed
             if (window.resetPopupTracking) {
               window.resetPopupTracking();
             }
           } else if (data.status === "invalid_email") {
-            msg.textContent = "Please enter a valid email address";
-            msg.classList.add("error");
+            if (msg) {
+              msg.textContent = "Please enter a valid email address";
+              msg.classList.add("error");
+            }
           } else if (data.status === "ok") {
             // Honeypot triggered (bot), silently succeed
-            msg.textContent = "Thanks for signing up";
-            msg.classList.add("success");
+            if (msg) {
+              msg.textContent = successMessage;
+              msg.classList.add("success");
+            }
             form.reset();
             // Reset popup tracking when successfully subscribed
             if (window.resetPopupTracking) {
@@ -461,24 +469,31 @@
           } else {
             // Fallback: check for old result format or show error
             if (data.result === "success") {
-              msg.textContent = "Thanks for signing up";
-              msg.classList.add("success");
+              if (msg) {
+                msg.textContent = successMessage;
+                msg.classList.add("success");
+              }
               form.reset();
               // Reset popup tracking when successfully subscribed
               if (window.resetPopupTracking) {
                 window.resetPopupTracking();
               }
             } else {
-              msg.textContent =
-                data.message || "Something went wrong. Please try again.";
-              msg.classList.add("error");
+              if (msg) {
+                msg.textContent =
+                  data.message || "Something went wrong. Please try again.";
+                msg.classList.add("error");
+              }
             }
           }
         } catch (err) {
           console.error("Form submission error:", err);
-          msg.textContent = "Network error. Try again later.";
-          msg.classList.add("error");
+          if (msg) {
+            msg.textContent = "Network error. Try again later.";
+            msg.classList.add("error");
+          }
         }
+      });
       });
     </script>
     <script src="../script.js"></script>

@@ -519,6 +519,114 @@ main img.no-animation:hover {
   opacity: 0.7;
 }
 
+/* Merch page form styling */
+main .newsletter {
+  background: white;
+  padding: 3rem 2.5rem;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+main .newsletter h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+main .newsletter p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+  opacity: 0.9;
+  text-align: center;
+}
+
+/* Merch form input and button styling */
+main .newsletter .email-signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+main .newsletter .email-signup-form input[type="email"] {
+  font-family: "Geom", sans-serif;
+  font-size: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: white;
+  color: #000;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 4px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+main .newsletter .email-signup-form input[type="email"]:focus {
+  outline: none;
+  border-color: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+main .newsletter .email-signup-form input[type="email"]::placeholder {
+  color: #000;
+  opacity: 0.4;
+}
+
+main .newsletter .email-signup-form button[type="submit"] {
+  font-family: "Geom", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #000;
+  background: #000;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: auto;
+  align-self: center;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+main .newsletter .email-signup-form button[type="submit"]:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+main .newsletter .email-signup-form button[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+@media (max-width: 900px) {
+  main .newsletter {
+    padding: 2rem 1.5rem;
+    max-width: 90%;
+  }
+
+  main .newsletter h2 {
+    font-size: 1.5rem;
+  }
+
+  main .newsletter p {
+    font-size: 1rem;
+  }
+
+  main .newsletter .email-signup-form input[type="email"] {
+    padding: 0.875rem 1rem;
+    font-size: 0.95rem;
+  }
+
+  main .newsletter .email-signup-form button[type="submit"] {
+    padding: 0.7rem 1.25rem;
+    font-size: 0.85rem;
+  }
+}
+
 /* Footer */
 footer {
   background-color: #2a2a2a;
