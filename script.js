@@ -175,6 +175,10 @@ const subscribeButtonMobile = document.querySelector(
 if (contactButton) {
   contactButton.addEventListener("click", (e) => {
     e.preventDefault();
+    // Track subscribe button click
+    if (window.plausible) {
+      window.plausible("Subscribe Button Click");
+    }
     // Remove "already subscribed" preference when subscribe button is clicked
     setAlreadySubscribed(false);
     // Update checkbox state if it exists
@@ -189,6 +193,10 @@ if (contactButton) {
 if (subscribeButtonMobile) {
   subscribeButtonMobile.addEventListener("click", (e) => {
     e.preventDefault();
+    // Track subscribe button click
+    if (window.plausible) {
+      window.plausible("Subscribe Button Click");
+    }
     closeMenu(); // Close mobile menu first
     // Remove "already subscribed" preference when subscribe button is clicked
     setAlreadySubscribed(false);

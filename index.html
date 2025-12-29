@@ -510,6 +510,12 @@
 
           // Handle different status responses
           if (data.status === "subscribed") {
+            // Track successful form submission
+            if (window.plausible) {
+              window.plausible("Email Signup", {
+                props: { status: "subscribed" },
+              });
+            }
             msg.textContent = "Thanks for signing up";
             msg.classList.add("success");
             form.reset();
@@ -518,6 +524,12 @@
               window.resetPopupTracking();
             }
           } else if (data.status === "already_subscribed") {
+            // Track already subscribed
+            if (window.plausible) {
+              window.plausible("Email Signup", {
+                props: { status: "already_subscribed" },
+              });
+            }
             msg.textContent = "Thanks, but you've already signed up";
             msg.classList.add("success");
             form.reset();
@@ -530,6 +542,7 @@
             msg.classList.add("error");
           } else if (data.status === "ok") {
             // Honeypot triggered (bot), silently succeed
+            // Don't track bot submissions
             msg.textContent = "Thanks for signing up";
             msg.classList.add("success");
             form.reset();
@@ -540,6 +553,12 @@
           } else {
             // Fallback: check for old result format or show error
             if (data.result === "success") {
+              // Track successful form submission
+              if (window.plausible) {
+                window.plausible("Email Signup", {
+                  props: { status: "success" },
+                });
+              }
               msg.textContent = "Thanks for signing up";
               msg.classList.add("success");
               form.reset();

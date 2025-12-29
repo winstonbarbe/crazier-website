@@ -431,6 +431,10 @@
 
           // Handle different status responses
           if (data.status === "subscribed") {
+            // Track successful form submission
+            if (window.plausible) {
+              window.plausible("Email Signup", { props: { status: "subscribed", page: "merch" } });
+            }
             if (msg) {
               msg.textContent = successMessage;
               msg.classList.add("success");
@@ -441,6 +445,10 @@
               window.resetPopupTracking();
             }
           } else if (data.status === "already_subscribed") {
+            // Track already subscribed
+            if (window.plausible) {
+              window.plausible("Email Signup", { props: { status: "already_subscribed", page: "merch" } });
+            }
             if (msg) {
               msg.textContent = "Thanks, but you've already signed up";
               msg.classList.add("success");
@@ -469,6 +477,10 @@
           } else {
             // Fallback: check for old result format or show error
             if (data.result === "success") {
+              // Track successful form submission
+              if (window.plausible) {
+                window.plausible("Email Signup", { props: { status: "success", page: "merch" } });
+              }
               if (msg) {
                 msg.textContent = successMessage;
                 msg.classList.add("success");
