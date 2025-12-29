@@ -52,6 +52,48 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../style.css" />
+    <style>
+      /* Shows page specific styling - background image */
+      main .newsletter {
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Background image layer */
+      main .newsletter::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("../assets/photos/CrazierEli.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 6px;
+        z-index: 0;
+      }
+
+      /* Overlay layer */
+      main .newsletter::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 6px;
+        z-index: 1;
+      }
+
+      /* Ensure content is above overlay */
+      main .newsletter > * {
+        position: relative;
+        z-index: 2;
+      }
+    </style>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -234,16 +276,35 @@
     <main>
       <div>
         <div>
-          <p>We hope to see you soon</p>
-          <p>
-            Book us:
-            <a href="mailto:wtf.crazier@gmail.com">wtf.crazier@gmail.com</a>
-          </p>
-          <img
-            src="../assets/photos/CrazierEli.png"
-            alt="Crazier"
-            class="main-image"
-          />
+          <div class="newsletter">
+            <h2>We are booking shows now</h2>
+            <p>
+              Email us to book:
+              <a href="mailto:wtf.crazier@gmail.com">wtf.crazier@gmail.com</a>
+            </p>
+            <p style="margin-top: 2rem">
+              Be the first to know when we announce shows
+            </p>
+            <form id="shows-email-form" class="email-signup-form">
+              <div class="hp-field" aria-hidden="true">
+                <label>Leave this field empty</label>
+                <input
+                  type="text"
+                  name="nickname"
+                  autocomplete="off"
+                  tabindex="-1"
+                />
+              </div>
+              <input
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                required
+              />
+              <button type="submit">Sign up</button>
+            </form>
+            <div id="shows-msg" class="msg"></div>
+          </div>
         </div>
       </div>
     </main>
@@ -356,43 +417,6 @@
         </div>
       </nav>
     </div>
-    <div class="popup-overlay" id="mailingListPopup">
-      <div class="popup-modal">
-        <button class="popup-close" aria-label="Close popup">&times;</button>
-        <div class="newsletter">
-          <h2>Join the Crazier mailing list</h2>
-          <form id="email-form">
-            <div class="hp-field" aria-hidden="true">
-              <label>Leave this field empty</label>
-              <input
-                type="text"
-                name="nickname"
-                autocomplete="off"
-                tabindex="-1"
-              />
-            </div>
-            <input
-              type="email"
-              name="email"
-              placeholder="you@example.com"
-              required
-            />
-            <button type="submit">Sign up</button>
-            <div class="already-subscribed-option">
-              <label>
-                <input
-                  type="checkbox"
-                  id="alreadySubscribedCheckbox"
-                  name="alreadySubscribed"
-                />
-                Already subscribed?
-              </label>
-            </div>
-          </form>
-          <div id="msg" class="msg"></div>
-        </div>
-      </div>
-    </div>
 
     <footer>
       <div class="footer-content">
@@ -417,91 +441,145 @@
       const scriptURL =
         "https://script.google.com/macros/s/AKfycby_Gwlt7t80I2JsMBRrl912smKGDqY8wJEt2Fq4dCmexudERTNEfr4y2xI2vHyLzEwW/exec";
 
-      const form = document.getElementById("email-form");
-      const msg = document.getElementById("msg");
+      // Handle all email forms on the page
+      const forms = document.querySelectorAll(".email-signup-form");
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        msg.textContent = "Submitting…";
-        msg.className = "msg";
+      forms.forEach((form) => {
+        // Find the associated message div (closest .newsletter container, then find .msg)
+        const newsletterContainer = form.closest(".newsletter");
+        const msg = newsletterContainer
+          ? newsletterContainer.querySelector(".msg")
+          : null;
 
-        const formData = new FormData(form);
-
-        try {
-          const res = await fetch(scriptURL, {
-            method: "POST",
-            body: formData,
-          });
-
-          // Google Apps Script may return 200 even on errors, so check content type
-          const contentType = res.headers.get("content-type");
-          let data;
-
-          if (contentType && contentType.includes("application/json")) {
-            data = await res.json();
-          } else {
-            // If not JSON, try to parse as text first
-            const text = await res.text();
-            try {
-              data = JSON.parse(text);
-            } catch (e) {
-              // If parsing fails, treat as error
-              msg.textContent = "Server error. Try again later.";
-              msg.classList.add("error");
-              return;
-            }
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          if (msg) {
+            msg.textContent = "Submitting…";
+            msg.className = "msg";
           }
 
-          // Handle different status responses
-          if (data.status === "subscribed") {
-            msg.textContent = "Thanks for signing up";
-            msg.classList.add("success");
-            form.reset();
-            // Reset popup tracking when successfully subscribed
-            if (window.resetPopupTracking) {
-              window.resetPopupTracking();
+          const formData = new FormData(form);
+
+          try {
+            const res = await fetch(scriptURL, {
+              method: "POST",
+              body: formData,
+            });
+
+            // Google Apps Script may return 200 even on errors, so check content type
+            const contentType = res.headers.get("content-type");
+            let data;
+
+            if (contentType && contentType.includes("application/json")) {
+              data = await res.json();
+            } else {
+              // If not JSON, try to parse as text first
+              const text = await res.text();
+              try {
+                data = JSON.parse(text);
+              } catch (e) {
+                // If parsing fails, treat as error
+                if (msg) {
+                  msg.textContent = "Server error. Try again later.";
+                  msg.classList.add("error");
+                }
+                return;
+              }
             }
-          } else if (data.status === "already_subscribed") {
-            msg.textContent = "Thanks, but you've already signed up";
-            msg.classList.add("success");
-            form.reset();
-            // Reset popup tracking when already subscribed
-            if (window.resetPopupTracking) {
-              window.resetPopupTracking();
-            }
-          } else if (data.status === "invalid_email") {
-            msg.textContent = "Please enter a valid email address";
-            msg.classList.add("error");
-          } else if (data.status === "ok") {
-            // Honeypot triggered (bot), silently succeed
-            msg.textContent = "Thanks for signing up";
-            msg.classList.add("success");
-            form.reset();
-            // Reset popup tracking when successfully subscribed
-            if (window.resetPopupTracking) {
-              window.resetPopupTracking();
-            }
-          } else {
-            // Fallback: check for old result format or show error
-            if (data.result === "success") {
-              msg.textContent = "Thanks for signing up";
-              msg.classList.add("success");
+
+            // Check if this is the shows page form (has "We are booking shows now" heading nearby)
+            const isShowsForm =
+              newsletterContainer &&
+              newsletterContainer
+                .querySelector("h2")
+                ?.textContent.includes("We are booking shows now");
+            const successMessage = isShowsForm
+              ? "Thanks for signing up! You'll be the first to know when we announce shows."
+              : "Thanks for signing up";
+
+            // Handle different status responses
+            if (data.status === "subscribed") {
+              // Track successful form submission
+              if (window.plausible) {
+                window.plausible("Email Signup", {
+                  props: { status: "subscribed", page: "shows" },
+                });
+              }
+              if (msg) {
+                msg.textContent = successMessage;
+                msg.classList.add("success");
+              }
+              form.reset();
+              // Reset popup tracking when successfully subscribed
+              if (window.resetPopupTracking) {
+                window.resetPopupTracking();
+              }
+            } else if (data.status === "already_subscribed") {
+              // Track already subscribed
+              if (window.plausible) {
+                window.plausible("Email Signup", {
+                  props: { status: "already_subscribed", page: "shows" },
+                });
+              }
+              if (msg) {
+                msg.textContent = "Thanks, but you've already signed up";
+                msg.classList.add("success");
+              }
+              form.reset();
+              // Reset popup tracking when already subscribed
+              if (window.resetPopupTracking) {
+                window.resetPopupTracking();
+              }
+            } else if (data.status === "invalid_email") {
+              if (msg) {
+                msg.textContent = "Please enter a valid email address";
+                msg.classList.add("error");
+              }
+            } else if (data.status === "ok") {
+              // Honeypot triggered (bot), silently succeed
+              if (msg) {
+                msg.textContent = successMessage;
+                msg.classList.add("success");
+              }
               form.reset();
               // Reset popup tracking when successfully subscribed
               if (window.resetPopupTracking) {
                 window.resetPopupTracking();
               }
             } else {
-              msg.textContent =
-                data.message || "Something went wrong. Please try again.";
+              // Fallback: check for old result format or show error
+              if (data.result === "success") {
+                // Track successful form submission
+                if (window.plausible) {
+                  window.plausible("Email Signup", {
+                    props: { status: "success", page: "shows" },
+                  });
+                }
+                if (msg) {
+                  msg.textContent = successMessage;
+                  msg.classList.add("success");
+                }
+                form.reset();
+                // Reset popup tracking when successfully subscribed
+                if (window.resetPopupTracking) {
+                  window.resetPopupTracking();
+                }
+              } else {
+                if (msg) {
+                  msg.textContent =
+                    data.message || "Something went wrong. Please try again.";
+                  msg.classList.add("error");
+                }
+              }
+            }
+          } catch (err) {
+            console.error("Form submission error:", err);
+            if (msg) {
+              msg.textContent = "Network error. Try again later.";
               msg.classList.add("error");
             }
           }
-        } catch (err) {
-          console.error("Form submission error:", err);
-          msg.textContent = "Network error. Try again later.";
-          msg.classList.add("error");
-        }
+        });
       });
     </script>
     <script src="../script.js"></script>
