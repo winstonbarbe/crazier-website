@@ -492,11 +492,36 @@
             >Instagram</a
           >
           <span>|</span>
-          <a
-            href="mailto:wtf.crazier@gmail.com?subject=Contact"
-            id="footerContact"
-            >Booking & other Inquiries: wtf.crazier@gmail.com</a
-          >
+          <span class="email-container">
+            <a
+              href="mailto:wtf.crazier@gmail.com?subject=Contact"
+              id="footerContact"
+              >Booking & other Inquiries: wtf.crazier@gmail.com</a
+            >
+            <button
+              class="copy-email-btn"
+              id="copyEmailBtn"
+              title="Copy email to clipboard"
+              aria-label="Copy email to clipboard"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                ></path>
+              </svg>
+            </button>
+            <span class="copy-feedback" id="copyFeedback">Copied!</span>
+          </span>
         </div>
         <p>
           &copy; 2025 Crazier. All rights reserved. Designed by Winston Barbe
@@ -513,6 +538,18 @@
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
+
+        // Prevent submitting the band's email address
+        const emailInput = form.querySelector('input[type="email"]');
+        const emailValue = emailInput
+          ? emailInput.value.trim().toLowerCase()
+          : "";
+        if (emailValue === "wtf.crazier@gmail.com") {
+          msg.textContent = "Please use your own email address.";
+          msg.classList.add("error");
+          return;
+        }
+
         msg.textContent = "Submitting…";
         msg.className = "msg";
 

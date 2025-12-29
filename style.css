@@ -678,3 +678,108 @@ footer {
 .footer-links span {
   opacity: 0.5;
 }
+
+.email-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.copy-email-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  line-height: 1;
+}
+
+.copy-email-btn:hover {
+  opacity: 1;
+}
+
+.copy-email-btn svg {
+  display: block;
+}
+
+.copy-feedback {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 100%;
+  margin-bottom: 0.5rem;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+}
+
+.copy-feedback.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Email container in forms (shows/merch pages) */
+main .newsletter .email-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+main .newsletter .copy-email-btn {
+  background: transparent;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  line-height: 1;
+}
+
+main .newsletter .copy-email-btn:hover {
+  opacity: 1;
+}
+
+main .newsletter .copy-email-btn svg {
+  display: block;
+}
+
+main .newsletter .copy-feedback {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 100%;
+  margin-bottom: 0.5rem;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+}
+
+main .newsletter .copy-feedback.show {
+  opacity: 1;
+  visibility: visible;
+}

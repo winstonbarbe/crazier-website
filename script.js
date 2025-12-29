@@ -140,10 +140,14 @@ function openPopup() {
   }
 }
 
-// Show popup after 3 seconds (only if it should be shown)
-setTimeout(() => {
-  openPopup();
-}, 3000);
+// Show popup after 3 seconds (only on home page, only if it should be shown)
+// Check if we're on the home page (not shows or merch)
+const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
+if (isHomePage) {
+  setTimeout(() => {
+    openPopup();
+  }, 3000);
+}
 
 // Close popup when clicking close button
 if (popupClose) {
@@ -235,3 +239,59 @@ if (footerContact) {
     window.location.href = "mailto:wtf.crazier@gmail.com?subject=Contact";
   });
 }
+
+// Copy email to clipboard functionality
+function setupCopyEmailButton(buttonId, feedbackId) {
+  const copyEmailBtn = document.getElementById(buttonId);
+  const copyFeedback = document.getElementById(feedbackId);
+
+  if (copyEmailBtn) {
+    copyEmailBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const email = "wtf.crazier@gmail.com";
+      
+      try {
+        await navigator.clipboard.writeText(email);
+        
+        // Show feedback
+        if (copyFeedback) {
+          copyFeedback.classList.add("show");
+          setTimeout(() => {
+            copyFeedback.classList.remove("show");
+          }, 2000);
+        }
+        
+        // Track copy action
+        if (window.plausible) {
+          window.plausible("Email Copied");
+        }
+      } catch (err) {
+        // Fallback for older browsers
+        const textArea = document.createElement("textarea");
+        textArea.value = email;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand("copy");
+          if (copyFeedback) {
+            copyFeedback.classList.add("show");
+            setTimeout(() => {
+              copyFeedback.classList.remove("show");
+            }, 2000);
+          }
+        } catch (fallbackErr) {
+          console.error("Failed to copy email:", fallbackErr);
+        }
+        document.body.removeChild(textArea);
+      }
+    });
+  }
+}
+
+// Setup copy buttons for footer and forms
+setupCopyEmailButton("copyEmailBtn", "copyFeedback");
+setupCopyEmailButton("copyEmailBtnForm", "copyFeedbackForm");

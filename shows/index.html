@@ -280,7 +280,39 @@
             <h2>We are booking shows now</h2>
             <p>
               Email us to book:
-              <a href="mailto:wtf.crazier@gmail.com">wtf.crazier@gmail.com</a>
+              <span class="email-container">
+                <a href="mailto:wtf.crazier@gmail.com">wtf.crazier@gmail.com</a>
+                <button
+                  class="copy-email-btn"
+                  id="copyEmailBtnForm"
+                  title="Copy email to clipboard"
+                  aria-label="Copy email to clipboard"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect
+                      x="9"
+                      y="9"
+                      width="13"
+                      height="13"
+                      rx="2"
+                      ry="2"
+                    ></rect>
+                    <path
+                      d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                    ></path>
+                  </svg>
+                </button>
+                <span class="copy-feedback" id="copyFeedbackForm">Copied!</span>
+              </span>
             </p>
             <p style="margin-top: 2rem">
               Be the first to know when we announce shows
@@ -460,17 +492,79 @@
             >Instagram</a
           >
           <span>|</span>
-          <a
-            href="mailto:wtf.crazier@gmail.com?subject=Contact"
-            id="footerContact"
-            >Booking & other Inquiries: wtf.crazier@gmail.com</a
-          >
+          <span class="email-container">
+            <a
+              href="mailto:wtf.crazier@gmail.com?subject=Contact"
+              id="footerContact"
+              >Booking & other Inquiries: wtf.crazier@gmail.com</a
+            >
+            <button
+              class="copy-email-btn"
+              id="copyEmailBtn"
+              title="Copy email to clipboard"
+              aria-label="Copy email to clipboard"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path
+                  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                ></path>
+              </svg>
+            </button>
+            <span class="copy-feedback" id="copyFeedback">Copied!</span>
+          </span>
         </div>
         <p>
           &copy; 2025 Crazier. All rights reserved. Designed by Winston Barbe
         </p>
       </div>
     </footer>
+    <div class="popup-overlay" id="mailingListPopup">
+      <div class="popup-modal">
+        <button class="popup-close" aria-label="Close popup">&times;</button>
+        <div class="newsletter">
+          <h2>Join the Crazier mailing list</h2>
+          <form id="email-form">
+            <div class="hp-field" aria-hidden="true">
+              <label>Leave this field empty</label>
+              <input
+                type="text"
+                name="nickname"
+                autocomplete="off"
+                tabindex="-1"
+              />
+            </div>
+            <input
+              type="email"
+              name="email"
+              placeholder="you@example.com"
+              required
+            />
+            <button type="submit">Sign up</button>
+            <div class="already-subscribed-option">
+              <label>
+                <input
+                  type="checkbox"
+                  id="alreadySubscribedCheckbox"
+                  name="alreadySubscribed"
+                />
+                Already subscribed?
+              </label>
+            </div>
+          </form>
+          <div id="msg" class="msg"></div>
+        </div>
+      </div>
+    </div>
 
     <script>
       const scriptURL =
@@ -488,6 +582,20 @@
 
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
+
+          // Prevent submitting the band's email address
+          const emailInput = form.querySelector('input[type="email"]');
+          const emailValue = emailInput
+            ? emailInput.value.trim().toLowerCase()
+            : "";
+          if (emailValue === "wtf.crazier@gmail.com") {
+            if (msg) {
+              msg.textContent = "Please use your own email address.";
+              msg.classList.add("error");
+            }
+            return;
+          }
+
           if (msg) {
             msg.textContent = "Submitting…";
             msg.className = "msg";
@@ -616,6 +724,112 @@
           }
         });
       });
+
+      // Handle popup form (email-form)
+      const popupForm = document.getElementById("email-form");
+      const popupMsg = document.getElementById("msg");
+      if (popupForm && popupMsg) {
+        popupForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          // Prevent submitting the band's email address
+          const emailInput = popupForm.querySelector('input[type="email"]');
+          const emailValue = emailInput
+            ? emailInput.value.trim().toLowerCase()
+            : "";
+          if (emailValue === "wtf.crazier@gmail.com") {
+            popupMsg.textContent = "Please use your own email address.";
+            popupMsg.classList.add("error");
+            return;
+          }
+
+          popupMsg.textContent = "Submitting…";
+          popupMsg.className = "msg";
+
+          const formData = new FormData(popupForm);
+
+          try {
+            const res = await fetch(scriptURL, {
+              method: "POST",
+              body: formData,
+            });
+
+            const contentType = res.headers.get("content-type");
+            let data;
+
+            if (contentType && contentType.includes("application/json")) {
+              data = await res.json();
+            } else {
+              const text = await res.text();
+              try {
+                data = JSON.parse(text);
+              } catch (e) {
+                popupMsg.textContent = "Server error. Try again later.";
+                popupMsg.classList.add("error");
+                return;
+              }
+            }
+
+            if (data.status === "subscribed") {
+              if (window.plausible) {
+                window.plausible("Email Signup", {
+                  props: { status: "subscribed", page: "shows" },
+                });
+              }
+              popupMsg.textContent = "Thanks for signing up";
+              popupMsg.classList.add("success");
+              popupForm.reset();
+              if (window.resetPopupTracking) {
+                window.resetPopupTracking();
+              }
+            } else if (data.status === "already_subscribed") {
+              if (window.plausible) {
+                window.plausible("Email Signup", {
+                  props: { status: "already_subscribed", page: "shows" },
+                });
+              }
+              popupMsg.textContent = "Thanks, but you've already signed up";
+              popupMsg.classList.add("success");
+              popupForm.reset();
+              if (window.resetPopupTracking) {
+                window.resetPopupTracking();
+              }
+            } else if (data.status === "invalid_email") {
+              popupMsg.textContent = "Please enter a valid email address";
+              popupMsg.classList.add("error");
+            } else if (data.status === "ok") {
+              popupMsg.textContent = "Thanks for signing up";
+              popupMsg.classList.add("success");
+              popupForm.reset();
+              if (window.resetPopupTracking) {
+                window.resetPopupTracking();
+              }
+            } else {
+              if (data.result === "success") {
+                if (window.plausible) {
+                  window.plausible("Email Signup", {
+                    props: { status: "success", page: "shows" },
+                  });
+                }
+                popupMsg.textContent = "Thanks for signing up";
+                popupMsg.classList.add("success");
+                popupForm.reset();
+                if (window.resetPopupTracking) {
+                  window.resetPopupTracking();
+                }
+              } else {
+                popupMsg.textContent =
+                  data.message || "Something went wrong. Please try again.";
+                popupMsg.classList.add("error");
+              }
+            }
+          } catch (err) {
+            console.error("Form submission error:", err);
+            popupMsg.textContent = "Network error. Try again later.";
+            popupMsg.classList.add("error");
+          }
+        });
+      }
     </script>
     <script src="../script.js"></script>
   </body>
