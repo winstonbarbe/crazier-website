@@ -71,10 +71,22 @@
       }
     </script>
     <!-- Privacy-friendly analytics by Plausible -->
-    <script async src="https://plausible.io/js/pa-X0oJC14JieIB4wVlXgRJ4.js"></script>
+    <script
+      async
+      src="https://plausible.io/js/pa-X0oJC14JieIB4wVlXgRJ4.js"
+    ></script>
     <script>
-      window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
-      plausible.init()
+      (window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          });
+      plausible.init();
     </script>
   </head>
 
@@ -97,7 +109,11 @@
           />
         </a>
       </div>
-      <div class="right-header" role="navigation" aria-label="Social media links">
+      <div
+        class="right-header"
+        role="navigation"
+        aria-label="Social media links"
+      >
         <!-- <a href="https://www.reddit.com/r/crazier/" title="Reddit">
           <svg
             role="img"
@@ -152,10 +168,7 @@
             <path d="M0 18.75l7.437-13.5H24l-7.438 13.5H0z" />
           </svg>
         </a>
-        <a
-          href="https://wtf-crazier.bsky.social"
-          title="Bluesky"
-        >
+        <a href="https://wtf-crazier.bsky.social" title="Bluesky">
           <svg
             role="img"
             viewBox="0 0 24 24"
@@ -212,10 +225,11 @@
     <main>
       <div>
         <div>
-          <p style="font-size: 1.5rem; margin-bottom: 1rem">
-            About Crazier
+          <p style="font-size: 1.5rem; margin-bottom: 1rem">About Crazier</p>
+          <p>
+            Crazier is a music project that creates unique sounds and
+            experiences.
           </p>
-          <p>Crazier is a music project that creates unique sounds and experiences.</p>
           <img
             class="main-image"
             src="../assets/photos/shroomy.JPG"
@@ -288,10 +302,7 @@
               <path d="M0 18.75l7.437-13.5H24l-7.438 13.5H0z" />
             </svg>
           </a>
-          <a
-            href="https://wtf-crazier.bsky.social"
-            title="Bluesky"
-          >
+          <a href="https://wtf-crazier.bsky.social" title="Bluesky">
             <svg
               role="img"
               viewBox="0 0 24 24"
@@ -376,20 +387,55 @@
 
     <footer>
       <div class="footer-content">
-        <p>
-          &copy; 2025 Crazier. All rights reserved. Designed by Winston Barbe
-        </p>
+        <p>We are a band from Athens, GA.</p>
         <div class="footer-links">
-          <!-- <a href="#">Privacy Policy</a>
+          <a href="/shows">Shows</a>
           <span>|</span>
-          <a href="#">Terms of Service</a>
-          <span>|</span> -->
+          <a href="/merch">Merch</a>
+          <span>|</span>
+          <a href="https://crazier.bandcamp.com/" rel="noopener noreferrer"
+            >Listen</a
+          >
+          <span>|</span>
+          <a href="/about">About</a>
+          <span>|</span>
+          <a href="#" id="contactButton">Subscribe</a>
+          <span>|</span>
+          <a
+            href="https://www.tiktok.com/@wtf.crazier"
+            rel="noopener noreferrer"
+            >TikTok</a
+          >
+          <span>|</span>
+          <a href="https://crazier.bandcamp.com/" rel="noopener noreferrer"
+            >Bandcamp</a
+          >
+          <span>|</span>
+          <a href="https://wtf-crazier.bsky.social" rel="noopener noreferrer"
+            >Bluesky</a
+          >
+          <span>|</span>
+          <a
+            href="https://www.youtube.com/@wtf.crazier"
+            rel="noopener noreferrer"
+            >YouTube</a
+          >
+          <span>|</span>
+          <a
+            href="https://www.instagram.com/wtf.crazier/"
+            rel="noopener noreferrer"
+            >Instagram</a
+          >
+          <span>|</span>
           <a
             href="mailto:wtf.crazier@gmail.com?subject=Contact"
             id="footerContact"
             >Booking & other Inquiries: wtf.crazier@gmail.com</a
           >
         </div>
+        <p>
+          &copy; 2025 Crazier. All rights reserved. Designed by Winston Barbe
+        </p>
       </div>
     </footer>
 
@@ -487,4 +533,3 @@
     <script src="../script.js"></script>
   </body>
 </html>
-

@@ -74,10 +74,22 @@
       }
     </script>
     <!-- Privacy-friendly analytics by Plausible -->
-    <script async src="https://plausible.io/js/pa-X0oJC14JieIB4wVlXgRJ4.js"></script>
+    <script
+      async
+      src="https://plausible.io/js/pa-X0oJC14JieIB4wVlXgRJ4.js"
+    ></script>
     <script>
-      window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
-      plausible.init()
+      (window.plausible =
+        window.plausible ||
+        function () {
+          (plausible.q = plausible.q || []).push(arguments);
+        }),
+        (plausible.init =
+          plausible.init ||
+          function (i) {
+            plausible.o = i || {};
+          });
+      plausible.init();
     </script>
   </head>
 
@@ -100,7 +112,11 @@
           />
         </a>
       </div>
-      <div class="right-header" role="navigation" aria-label="Social media links">
+      <div
+        class="right-header"
+        role="navigation"
+        aria-label="Social media links"
+      >
         <!-- <a href="https://www.reddit.com/r/crazier/" title="Reddit">
           <svg
             role="img"
@@ -155,10 +171,7 @@
             <path d="M0 18.75l7.437-13.5H24l-7.438 13.5H0z" />
           </svg>
         </a>
-        <a
-          href="https://wtf-crazier.bsky.social"
-          title="Bluesky"
-        >
+        <a href="https://wtf-crazier.bsky.social" title="Bluesky">
           <svg
             role="img"
             viewBox="0 0 24 24"
@@ -217,9 +230,7 @@
         <div>
           <div class="newsletter">
             <h2>Merch Coming Soon!</h2>
-            <p>
-              Join now to get first dibs on new merch drops
-            </p>
+            <p>Join now to get first dibs on new merch drops</p>
             <form id="merch-email-form" class="email-signup-form">
               <div class="hp-field" aria-hidden="true">
                 <label>Leave this field empty</label>
@@ -307,10 +318,7 @@
               <path d="M0 18.75l7.437-13.5H24l-7.438 13.5H0z" />
             </svg>
           </a>
-          <a
-            href="https://wtf-crazier.bsky.social"
-            title="Bluesky"
-          >
+          <a href="https://wtf-crazier.bsky.social" title="Bluesky">
             <svg
               role="img"
               viewBox="0 0 24 24"
@@ -358,20 +366,55 @@
 
     <footer>
       <div class="footer-content">
-        <p>
-          &copy; 2025 Crazier. All rights reserved. Designed by Winston Barbe
-        </p>
+        <p>We are a band from Athens, GA.</p>
         <div class="footer-links">
-          <!-- <a href="#">Privacy Policy</a>
+          <a href="/shows">Shows</a>
           <span>|</span>
-          <a href="#">Terms of Service</a>
-          <span>|</span> -->
+          <a href="/merch">Merch</a>
+          <span>|</span>
+          <a href="https://crazier.bandcamp.com/" rel="noopener noreferrer"
+            >Listen</a
+          >
+          <span>|</span>
+          <a href="/about">About</a>
+          <span>|</span>
+          <a href="#" id="contactButton">Subscribe</a>
+          <span>|</span>
+          <a
+            href="https://www.tiktok.com/@wtf.crazier"
+            rel="noopener noreferrer"
+            >TikTok</a
+          >
+          <span>|</span>
+          <a href="https://crazier.bandcamp.com/" rel="noopener noreferrer"
+            >Bandcamp</a
+          >
+          <span>|</span>
+          <a href="https://wtf-crazier.bsky.social" rel="noopener noreferrer"
+            >Bluesky</a
+          >
+          <span>|</span>
+          <a
+            href="https://www.youtube.com/@wtf.crazier"
+            rel="noopener noreferrer"
+            >YouTube</a
+          >
+          <span>|</span>
+          <a
+            href="https://www.instagram.com/wtf.crazier/"
+            rel="noopener noreferrer"
+            >Instagram</a
+          >
+          <span>|</span>
           <a
             href="mailto:wtf.crazier@gmail.com?subject=Contact"
             id="footerContact"
             >Booking & other Inquiries: wtf.crazier@gmail.com</a
           >
         </div>
+        <p>
+          &copy; 2025 Crazier. All rights reserved. Designed by Winston Barbe
+        </p>
       </div>
     </footer>
 
@@ -381,11 +424,13 @@
 
       // Handle all email forms on the page
       const forms = document.querySelectorAll(".email-signup-form");
-      
+
       forms.forEach((form) => {
         // Find the associated message div (closest .newsletter container, then find .msg)
         const newsletterContainer = form.closest(".newsletter");
-        const msg = newsletterContainer ? newsletterContainer.querySelector(".msg") : null;
+        const msg = newsletterContainer
+          ? newsletterContainer.querySelector(".msg")
+          : null;
 
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
@@ -396,90 +441,50 @@
 
           const formData = new FormData(form);
 
-        try {
-          const res = await fetch(scriptURL, {
-            method: "POST",
-            body: formData,
-          });
+          try {
+            const res = await fetch(scriptURL, {
+              method: "POST",
+              body: formData,
+            });
 
-          // Google Apps Script may return 200 even on errors, so check content type
-          const contentType = res.headers.get("content-type");
-          let data;
+            // Google Apps Script may return 200 even on errors, so check content type
+            const contentType = res.headers.get("content-type");
+            let data;
 
-          if (contentType && contentType.includes("application/json")) {
-            data = await res.json();
-          } else {
-            // If not JSON, try to parse as text first
-            const text = await res.text();
-            try {
-              data = JSON.parse(text);
-            } catch (e) {
-              // If parsing fails, treat as error
-              if (msg) {
-                msg.textContent = "Server error. Try again later.";
-                msg.classList.add("error");
+            if (contentType && contentType.includes("application/json")) {
+              data = await res.json();
+            } else {
+              // If not JSON, try to parse as text first
+              const text = await res.text();
+              try {
+                data = JSON.parse(text);
+              } catch (e) {
+                // If parsing fails, treat as error
+                if (msg) {
+                  msg.textContent = "Server error. Try again later.";
+                  msg.classList.add("error");
+                }
+                return;
               }
-              return;
             }
-          }
 
-          // Check if this is the merch page form (has "Merch Coming Soon!" heading nearby)
-          const isMerchForm = newsletterContainer && newsletterContainer.querySelector("h2")?.textContent.includes("Merch Coming Soon");
-          const successMessage = isMerchForm 
-            ? "Thanks for signing up! You'll be the first to know when merch drops."
-            : "Thanks for signing up";
+            // Check if this is the merch page form (has "Merch Coming Soon!" heading nearby)
+            const isMerchForm =
+              newsletterContainer &&
+              newsletterContainer
+                .querySelector("h2")
+                ?.textContent.includes("Merch Coming Soon");
+            const successMessage = isMerchForm
+              ? "Thanks for signing up! You'll be the first to know when merch drops."
+              : "Thanks for signing up";
 
-          // Handle different status responses
-          if (data.status === "subscribed") {
-            // Track successful form submission
-            if (window.plausible) {
-              window.plausible("Email Signup", { props: { status: "subscribed", page: "merch" } });
-            }
-            if (msg) {
-              msg.textContent = successMessage;
-              msg.classList.add("success");
-            }
-            form.reset();
-            // Reset popup tracking when successfully subscribed
-            if (window.resetPopupTracking) {
-              window.resetPopupTracking();
-            }
-          } else if (data.status === "already_subscribed") {
-            // Track already subscribed
-            if (window.plausible) {
-              window.plausible("Email Signup", { props: { status: "already_subscribed", page: "merch" } });
-            }
-            if (msg) {
-              msg.textContent = "Thanks, but you've already signed up";
-              msg.classList.add("success");
-            }
-            form.reset();
-            // Reset popup tracking when already subscribed
-            if (window.resetPopupTracking) {
-              window.resetPopupTracking();
-            }
-          } else if (data.status === "invalid_email") {
-            if (msg) {
-              msg.textContent = "Please enter a valid email address";
-              msg.classList.add("error");
-            }
-          } else if (data.status === "ok") {
-            // Honeypot triggered (bot), silently succeed
-            if (msg) {
-              msg.textContent = successMessage;
-              msg.classList.add("success");
-            }
-            form.reset();
-            // Reset popup tracking when successfully subscribed
-            if (window.resetPopupTracking) {
-              window.resetPopupTracking();
-            }
-          } else {
-            // Fallback: check for old result format or show error
-            if (data.result === "success") {
+            // Handle different status responses
+            if (data.status === "subscribed") {
               // Track successful form submission
               if (window.plausible) {
-                window.plausible("Email Signup", { props: { status: "success", page: "merch" } });
+                window.plausible("Email Signup", {
+                  props: { status: "subscribed", page: "merch" },
+                });
               }
               if (msg) {
                 msg.textContent = successMessage;
@@ -490,25 +495,74 @@
               if (window.resetPopupTracking) {
                 window.resetPopupTracking();
               }
-            } else {
+            } else if (data.status === "already_subscribed") {
+              // Track already subscribed
+              if (window.plausible) {
+                window.plausible("Email Signup", {
+                  props: { status: "already_subscribed", page: "merch" },
+                });
+              }
               if (msg) {
-                msg.textContent =
-                  data.message || "Something went wrong. Please try again.";
+                msg.textContent = "Thanks, but you've already signed up";
+                msg.classList.add("success");
+              }
+              form.reset();
+              // Reset popup tracking when already subscribed
+              if (window.resetPopupTracking) {
+                window.resetPopupTracking();
+              }
+            } else if (data.status === "invalid_email") {
+              if (msg) {
+                msg.textContent = "Please enter a valid email address";
                 msg.classList.add("error");
               }
+            } else if (data.status === "ok") {
+              // Honeypot triggered (bot), silently succeed
+              if (msg) {
+                msg.textContent = successMessage;
+                msg.classList.add("success");
+              }
+              form.reset();
+              // Reset popup tracking when successfully subscribed
+              if (window.resetPopupTracking) {
+                window.resetPopupTracking();
+              }
+            } else {
+              // Fallback: check for old result format or show error
+              if (data.result === "success") {
+                // Track successful form submission
+                if (window.plausible) {
+                  window.plausible("Email Signup", {
+                    props: { status: "success", page: "merch" },
+                  });
+                }
+                if (msg) {
+                  msg.textContent = successMessage;
+                  msg.classList.add("success");
+                }
+                form.reset();
+                // Reset popup tracking when successfully subscribed
+                if (window.resetPopupTracking) {
+                  window.resetPopupTracking();
+                }
+              } else {
+                if (msg) {
+                  msg.textContent =
+                    data.message || "Something went wrong. Please try again.";
+                  msg.classList.add("error");
+                }
+              }
+            }
+          } catch (err) {
+            console.error("Form submission error:", err);
+            if (msg) {
+              msg.textContent = "Network error. Try again later.";
+              msg.classList.add("error");
             }
           }
-        } catch (err) {
-          console.error("Form submission error:", err);
-          if (msg) {
-            msg.textContent = "Network error. Try again later.";
-            msg.classList.add("error");
-          }
-        }
-      });
+        });
       });
     </script>
     <script src="../script.js"></script>
   </body>
 </html>
-
