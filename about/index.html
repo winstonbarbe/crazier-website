@@ -51,6 +51,80 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../style.css" />
+    <style>
+      /* About page specific styling */
+      .about-container {
+        display: flex;
+        flex-direction: column;
+        max-width: 1200px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 2rem;
+        align-items: center;
+      }
+
+      .about-text-column {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 800px;
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .about-text-column h2 {
+        font-family: "Geom", sans-serif;
+        font-size: 1.5rem;
+        font-weight: 400;
+        margin: 0 0 1rem 0;
+        color: #000;
+      }
+
+      .about-text-column p {
+        font-family: "Geom", sans-serif;
+        font-size: 1rem;
+        line-height: 1.8;
+        color: #000;
+        margin: 0 0 1rem 0;
+      }
+
+      .about-text-column p:last-child {
+        margin-bottom: 0;
+      }
+
+      .about-image-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        max-width: 800px;
+      }
+
+      .about-image-column img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        object-fit: contain;
+        border-radius: 6px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      @media (max-width: 900px) {
+        .about-container {
+          padding: 1rem;
+        }
+
+        .about-text-column {
+          margin-bottom: 1.5rem;
+        }
+
+        .about-text-column h2 {
+          font-size: 1.25rem;
+        }
+      }
+    </style>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -232,20 +306,24 @@
     </header>
     <main>
       <div>
-        <div>
+        <div class="about-container">
           <h1 class="visually-hidden">About - Crazier</h1>
-          <p style="font-size: 1.5rem; margin-bottom: 1rem">About Crazier</p>
-          <p>
-            Crazier is a band from Athens, GA. Formed in 2026 by Eli Raps, Alex
-            Dillon, Kevin Kregger, and Winston Barbe. Listen to our first single
-            "Boat Music" now on
-            <a href="https://crazier.bandcamp.com/">Bandcamp</a>.
-          </p>
-          <img
-            class="main-image"
-            src="../assets/photos/shroomy.JPG"
-            alt="Crazier"
-          />
+          <div class="about-text-column">
+            <h2>About Crazier</h2>
+            <p>
+              Crazier is a band from Athens, GA. Formed in 2026 by Eli Raps,
+              Alex Dillon, Kevin Kregger, and Winston Barbe. Listen to our first
+              single "Boat Music" now on
+              <a href="https://crazier.bandcamp.com/">Bandcamp</a>.
+            </p>
+          </div>
+          <div class="about-image-column">
+            <img
+              class="main-image"
+              src="../assets/photos/shroomy.JPG"
+              alt="Crazier"
+            />
+          </div>
         </div>
       </div>
     </main>
