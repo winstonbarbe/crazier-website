@@ -8,3 +8,5 @@ Sitemap: https://www.crazier.wtf/sitemap.xml
 # Disallow: /admin/
 # Disallow: /private/
 
+
+
