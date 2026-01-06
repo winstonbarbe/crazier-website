@@ -155,6 +155,58 @@
         border-radius: 6px;
       }
 
+      .streaming-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 1.5rem;
+        gap: 1rem;
+      }
+
+      .streaming-label {
+        display: block;
+        font-family: "Geom", sans-serif;
+        font-size: 1rem;
+        color: #000;
+        text-decoration: underline;
+        text-align: center;
+      }
+
+      .streaming-icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .streaming-icons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.3s ease;
+        outline: none;
+        border: none;
+        box-shadow: none;
+      }
+
+      .streaming-icons a:hover {
+        opacity: 0.5;
+      }
+
+      .streaming-icons a:focus {
+        outline: none;
+      }
+
+      .streaming-icons img {
+        width: 24px;
+        height: 24px;
+        display: block;
+        outline: none;
+        border: none;
+        box-shadow: none;
+      }
+
       @media (max-width: 900px) {
         main > div {
           padding: 1rem;
@@ -231,9 +283,7 @@
       <div class="left-header" role="navigation" aria-label="Main navigation">
         <a href="/shows">Shows</a>
         <a href="/merch">Merch</a>
-        <a href="https://crazier.bandcamp.com/" rel="noopener noreferrer"
-          >Listen</a
-        >
+        <a href="/music">Listen</a>
         <a href="/about">About</a>
         <a href="#" id="contactButton">Subscribe</a>
       </div>
@@ -361,15 +411,36 @@
             <h2>Listen</h2>
             <div class="music-player-wrapper">
               <iframe
-                style="border: 0; width: 100%; height: 470px"
-                src="https://bandcamp.com/EmbeddedPlayer/album=3336231385/size=large/bgcol=ffffff/linkcol=de270f/tracklist=false/track=3145186351/transparent=true/"
+                style="border: 0; width: 350px; height: 442px"
+                src="https://bandcamp.com/EmbeddedPlayer/track=3401691868/size=large/bgcol=333333/linkcol=e32c14/tracklist=false/transparent=true/"
                 seamless
+                ><a href="https://crazier.bandcamp.com/track/boat-music"
+                  >Boat Music by Crazier</a
+                ></iframe
               >
+            </div>
+            <div class="streaming-links">
+              <span class="streaming-label">Stream on:</span>
+              <div class="streaming-icons">
                 <a
-                  href="https://velocirapture.bandcamp.com/album/vrap-by-velocirapture"
-                  >VRAP by Velocirapture by Velocirapture</a
+                  href="https://music.apple.com/us/album/boat-music/1858088455?i=1858088456"
+                  title="Apple Music"
                 >
-              </iframe>
+                  <img src="../assets/icons/apple.svg" alt="Apple Music" />
+                </a>
+                <a href="https://www.deezer.com/album/868933542" title="Deezer">
+                  <img src="../assets/icons/deezer.svg" alt="Deezer" />
+                </a>
+                <a
+                  href="https://open.spotify.com/album/7fYuskN9dhv1bTceWcgZ4q"
+                  title="Spotify"
+                >
+                  <img src="../assets/icons/spotify.svg" alt="Spotify" />
+                </a>
+                <a href="https://youtu.be/y7FUOGFpQmg" title="YouTube">
+                  <img src="../assets/icons/youtube.svg" alt="YouTube" />
+                </a>
+              </div>
             </div>
           </div>
           <div class="lyrics-column">
@@ -414,9 +485,7 @@
         <div class="mobile-menu-left">
           <a href="/shows">Shows</a>
           <a href="/merch">Merch</a>
-          <a href="https://crazier.bandcamp.com/" rel="noopener noreferrer"
-            >Listen</a
-          >
+          <a href="/music">Listen</a>
           <a href="/about">About</a>
           <a href="#" class="subscribe-button-mobile">Subscribe</a>
         </div>
@@ -558,9 +627,7 @@
           <span>|</span>
           <a href="/merch">Merch</a>
           <span>|</span>
-          <a href="https://crazier.bandcamp.com/" rel="noopener noreferrer"
-            >Listen</a
-          >
+          <a href="/music">Listen</a>
           <span>|</span>
           <a href="/about">About</a>
           <span>|</span>
