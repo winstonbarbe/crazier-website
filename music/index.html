@@ -2,13 +2,18 @@
 <html lang="en">
   <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J4NKCFWMC7"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-J4NKCFWMC7"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-      gtag('config', 'G-J4NKCFWMC7');
+      gtag("config", "G-J4NKCFWMC7");
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -68,21 +73,24 @@
     <link rel="stylesheet" href="../style.css" />
     <style>
       /* Music page specific styling */
-      main > div {
+      .main > div {
         max-width: 1200px;
         width: 100%;
         margin: 0 auto;
         padding: 2rem;
         display: flex;
         flex-direction: column;
+        align-items: center;
       }
 
-      .music-container {
+      /* Higher specificity so grid wins over global .main > div > div */
+      .main > div .music-container {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 3rem;
         width: 100%;
         align-items: start;
+        align-self: stretch;
       }
 
       .music-player-column {
@@ -117,6 +125,7 @@
         color: #888888;
         text-align: center;
         width: 100%;
+        display: block;
       }
 
       .lyrics-column h2 {
@@ -217,11 +226,11 @@
       }
 
       @media (max-width: 900px) {
-        main > div {
+        .main > div {
           padding: 1rem;
         }
 
-        .music-container {
+        .main > div .music-container {
           grid-template-columns: 1fr;
           gap: 2rem;
         }
@@ -429,8 +438,119 @@
         <span class="close-label">Close</span>
       </button>
     </header>
-    <main>
-      <div>
+    <div class="main">
+      <div id="dissolving-music-lyrics">
+        <h1 class="music-page-title">Dissolving</h1>
+        <div class="music-container">
+          <h2 class="visually-hidden">Music - Crazier</h2>
+          <div class="music-player-column">
+            <h2>Listen</h2>
+            <div class="music-player-wrapper">
+              <iframe
+                style="border: 0; width: 350px; height: 470px"
+                src="https://bandcamp.com/EmbeddedPlayer/album=3380061698/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/"
+                seamless
+                ><a href="https://crazier.bandcamp.com/album/this-dog-spits"
+                  >This Dog Spits by Crazier</a
+                ></iframe
+              >
+            </div>
+            <div class="streaming-links">
+              <span class="streaming-label">Stream on:</span>
+              <div class="streaming-icons">
+                <a
+                  href="https://music.apple.com/us/album/boat-music/1858088455?i=1858088456"
+                  title="Apple Music"
+                >
+                  <img src="../assets/icons/apple.svg" alt="Apple Music" />
+                </a>
+                <a href="https://tidal.com/track/487935010" title="Tidal">
+                  <img src="../assets/icons/tidal.svg" alt="Tidal" />
+                </a>
+                <a
+                  href="https://open.spotify.com/album/0c8B2fL8RaS51cLLetwpN2"
+                  title="Spotify"
+                >
+                  <img src="../assets/icons/spotify.svg" alt="Spotify" />
+                </a>
+                <a href="https://youtu.be/y7FUOGFpQmg" title="YouTube">
+                  <img src="../assets/icons/youtube.svg" alt="YouTube" />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="lyrics-column">
+            <h2>Lyrics</h2>
+            <div class="lyrics-content">
+              <div class="lyrics">
+                <p>
+                  The world is so big<br />
+                  This world is dissolving<br />
+                  We continue to dance<br />
+                  Though we're so exhausted
+                </p>
+
+                <p>
+                  What does it mean?<br />
+                  I mean, what's with the dancing?<br />
+                  I mean, who are you fooling?<br />
+                  We know a monster
+                </p>
+
+                <p>
+                  When we see one<br />
+                  When we hear one<br />
+                  When we taste one<br />
+                  We saw, heard, then tasted ya
+                </p>
+
+                <p>
+                  Why would I hold it in?<br />
+                  Who would that benefit?<br />
+                  I've got this song to sing, my love<br />
+                  And you're not gonna like it
+                </p>
+
+                <p>
+                  The world is a brink<br />
+                  This world will be over<br />
+                  For you and me both<br />
+                  If you get any closer
+                </p>
+
+                <p>
+                  I swear to God, I mean<br />
+                  What do you want from me?<br />
+                  You have a gun<br />
+                  Where I just have an angel
+                </p>
+
+                <p>
+                  And he's tough<br />
+                  And he's mean<br />
+                  And he told everyone what you've done to me
+                </p>
+
+                <p>
+                  I will not hold it in<br />
+                  Who would that benefit?<br />
+                  I've got this song to sing, my love<br />
+                  And you're gonna hate it
+                </p>
+
+                <p>
+                  I'll sing it anyway<br />
+                  Right here, right now, today<br />
+                  And I've got more where they came from
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="main">
+      <div id="boat-music-music-lyrics">
         <h1 class="music-page-title">Boat Music</h1>
         <div class="music-container">
           <h2 class="visually-hidden">Music - Crazier</h2>
@@ -506,7 +626,7 @@
           </div>
         </div>
       </div>
-    </main>
+    </div>
     <div class="mobile-menu-overlay">
       <nav class="mobile-menu">
         <div class="mobile-menu-left">

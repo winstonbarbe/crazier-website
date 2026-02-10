@@ -98,13 +98,13 @@
     </script>
     <style>
       /* Shows page specific styling - background image */
-      main .newsletter {
+      .main .newsletter {
         position: relative;
         overflow: hidden;
       }
 
       /* Background image layer */
-      main .newsletter::after {
+      .main .newsletter::after {
         content: "";
         position: absolute;
         top: 0;
@@ -120,7 +120,7 @@
       }
 
       /* Overlay layer */
-      main .newsletter::before {
+      .main .newsletter::before {
         content: "";
         position: absolute;
         top: 0;
@@ -133,7 +133,7 @@
       }
 
       /* Ensure content is above overlay */
-      main .newsletter > * {
+      .main .newsletter > * {
         position: relative;
         z-index: 2;
       }
@@ -321,7 +321,7 @@
         <span class="close-label">Close</span>
       </button>
     </header>
-    <main>
+    <div class="main">
       <div>
         <div>
           <div class="newsletter">
@@ -388,7 +388,7 @@
           </div>
         </div>
       </div>
-    </main>
+    </div>
     <div class="mobile-menu-overlay">
       <nav class="mobile-menu">
         <div class="mobile-menu-left">

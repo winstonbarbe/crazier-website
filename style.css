@@ -109,7 +109,7 @@ a {
 }
 
 /* Main content */
-main {
+.main {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -119,14 +119,14 @@ main {
   z-index: 10;
 }
 
-main > div {
+.main > div {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
 
-main > div > div {
+.main > div > div {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -134,20 +134,20 @@ main > div > div {
   width: 100%;
 }
 
-main > div > div p {
+.main > div > div p {
   margin: 0.5rem 0;
 }
 
-main > div > div img {
+.main > div > div img {
   transition: none;
   margin-top: 2rem;
 }
 
-main > div > div img:hover {
+.main > div > div img:hover {
   transform: none;
 }
 
-main img {
+.main img {
   width: 50%;
   max-width: 100%;
   height: auto;
@@ -160,15 +160,15 @@ main img {
   transition: transform 1s ease;
 }
 
-main img:hover {
+.main img:hover {
   transform: rotate(-0.5deg);
 }
 
-main img.no-animation {
+.main img.no-animation {
   transition: none;
 }
 
-main img.no-animation:hover {
+.main img.no-animation:hover {
   transform: none;
 }
 
@@ -366,12 +366,12 @@ main img.no-animation:hover {
     max-height: calc(100dvh - 60px);
   }
 
-  main {
+  .main {
     padding: 0 1rem;
     min-height: calc(100vh - 150px);
   }
 
-  main img {
+  .main img {
     width: 90%;
     max-width: 500px;
   }
@@ -556,7 +556,7 @@ main img.no-animation:hover {
 }
 
 /* Merch page form styling */
-main .newsletter {
+.main .newsletter {
   background: white;
   padding: 3rem 2.5rem;
   border-radius: 6px;
@@ -566,12 +566,12 @@ main .newsletter {
   margin: 0 auto;
 }
 
-main .newsletter h2 {
+.main .newsletter h2 {
   font-size: 2rem;
   margin-bottom: 1rem;
 }
 
-main .newsletter p {
+.main .newsletter p {
   font-size: 1.1rem;
   margin-bottom: 2rem;
   line-height: 1.5;
@@ -580,13 +580,13 @@ main .newsletter p {
 }
 
 /* Merch form input and button styling */
-main .newsletter .email-signup-form {
+.main .newsletter .email-signup-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-main .newsletter .email-signup-form input[type="email"] {
+.main .newsletter .email-signup-form input[type="email"] {
   font-family: "Geom", sans-serif;
   font-size: 1rem;
   padding: 1rem 1.25rem;
@@ -599,18 +599,18 @@ main .newsletter .email-signup-form input[type="email"] {
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-main .newsletter .email-signup-form input[type="email"]:focus {
+.main .newsletter .email-signup-form input[type="email"]:focus {
   outline: none;
   border-color: rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
 }
 
-main .newsletter .email-signup-form input[type="email"]::placeholder {
+.main .newsletter .email-signup-form input[type="email"]::placeholder {
   color: #000;
   opacity: 0.4;
 }
 
-main .newsletter .email-signup-form button[type="submit"] {
+.main .newsletter .email-signup-form button[type="submit"] {
   font-family: "Geom", sans-serif;
   font-size: 0.9rem;
   font-weight: 500;
@@ -627,37 +627,37 @@ main .newsletter .email-signup-form button[type="submit"] {
   letter-spacing: 0.5px;
 }
 
-main .newsletter .email-signup-form button[type="submit"]:hover {
+.main .newsletter .email-signup-form button[type="submit"]:hover {
   background: rgba(0, 0, 0, 0.8);
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-main .newsletter .email-signup-form button[type="submit"]:active {
+.main .newsletter .email-signup-form button[type="submit"]:active {
   transform: translateY(0);
   box-shadow: none;
 }
 
 @media (max-width: 900px) {
-  main .newsletter {
+  .main .newsletter {
     padding: 2rem 1.5rem;
     max-width: 90%;
   }
 
-  main .newsletter h2 {
+  .main .newsletter h2 {
     font-size: 1.5rem;
   }
 
-  main .newsletter p {
+  .main .newsletter p {
     font-size: 1rem;
   }
 
-  main .newsletter .email-signup-form input[type="email"] {
+  .main .newsletter .email-signup-form input[type="email"] {
     padding: 0.875rem 1rem;
     font-size: 0.95rem;
   }
 
-  main .newsletter .email-signup-form button[type="submit"] {
+  .main .newsletter .email-signup-form button[type="submit"] {
     padding: 0.7rem 1.25rem;
     font-size: 0.85rem;
   }
@@ -782,14 +782,14 @@ footer {
 }
 
 /* Email container in forms (shows/merch pages) */
-main .newsletter .email-container {
+.main .newsletter .email-container {
   position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-main .newsletter .copy-email-btn {
+.main .newsletter .copy-email-btn {
   background: transparent;
   border: none;
   color: #000;
@@ -803,15 +803,15 @@ main .newsletter .copy-email-btn {
   line-height: 1;
 }
 
-main .newsletter .copy-email-btn:hover {
+.main .newsletter .copy-email-btn:hover {
   opacity: 1;
 }
 
-main .newsletter .copy-email-btn svg {
+.main .newsletter .copy-email-btn svg {
   display: block;
 }
 
-main .newsletter .copy-feedback {
+.main .newsletter .copy-feedback {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -829,7 +829,7 @@ main .newsletter .copy-feedback {
   pointer-events: none;
 }
 
-main .newsletter .copy-feedback.show {
+.main .newsletter .copy-feedback.show {
   opacity: 1;
   visibility: visible;
 }
