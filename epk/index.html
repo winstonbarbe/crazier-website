@@ -102,7 +102,23 @@
         opacity: 0.8;
       }
 
+      .epk-page .epk-open-new {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: #888888;
+        opacity: 0.9;
+      }
+
+      .epk-page .epk-open-new a {
+        color: #888888;
+        text-decoration: underline;
+      }
+
       @media (max-width: 900px) {
+        .epk-page .main {
+          overflow-x: hidden;
+        }
+
         .epk-page .epk-container {
           padding: 1rem;
           gap: 2rem;
@@ -112,13 +128,25 @@
           font-size: 2rem;
         }
 
+        /* Full-width PDF area on mobile for easier reading */
         .epk-page .epk-pdf-wrapper {
-          min-height: 50vh;
+          width: 100vw;
+          max-width: 100vw;
+          margin-left: calc(50% - 50vw);
+          min-height: 75vh;
+          border-radius: 0;
+          border-left: 0;
+          border-right: 0;
         }
 
         .epk-page .epk-pdf-wrapper iframe {
-          height: 50vh;
-          min-height: 400px;
+          height: 75vh;
+          min-height: 450px;
+        }
+
+        .epk-page .epk-open-new {
+          font-size: 1rem;
+          margin-top: 0.75rem;
         }
       }
     </style>
@@ -296,6 +324,9 @@
             <a href="epk.pdf" download>Download EPK (PDF)</a>
             <span class="epk-download-sep"> · </span>
             <a href="https://drive.google.com/drive/folders/1JtjCUiM47U5o3k5e3rQaAci_sYFiHBKi" target="_blank" rel="noopener noreferrer">Download songs</a>
+          </p>
+          <p class="epk-open-new">
+            <a href="epk.pdf" target="_blank" rel="noopener noreferrer">Open PDF in new tab</a> — easier to read on mobile (zoom &amp; scroll)
           </p>
         </section>
       </div>
