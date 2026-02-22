@@ -71,6 +71,23 @@
         text-align: center;
       }
 
+      .epk-page .epk-lyrics-link {
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+        font-family: "Geom", sans-serif;
+        font-size: 1rem;
+        text-align: center;
+      }
+
+      .epk-page .epk-lyrics-link a {
+        color: #888888;
+        text-decoration: underline;
+      }
+
+      .epk-page .epk-lyrics-link a:hover {
+        opacity: 0.8;
+      }
+
       .epk-page .epk-section {
         width: 100%;
         display: flex;
@@ -122,6 +139,11 @@
         font-family: "Geom", sans-serif;
         font-size: 1rem;
         color: #888888;
+      }
+
+      .epk-page .epk-download-top {
+        margin-top: 0.5rem;
+        margin-bottom: 0;
       }
 
       .epk-page .epk-download a {
@@ -329,6 +351,9 @@
     <div class="main">
       <div class="epk-container">
         <h1 class="epk-title">EPK</h1>
+        <p class="epk-lyrics-link">
+          <a href="/lyrics">Lyrics</a>
+        </p>
 
         <section class="epk-section" aria-labelledby="epk-listen-heading">
           <h2 id="epk-listen-heading">Listen</h2>
@@ -345,6 +370,9 @@
 
         <section class="epk-section" aria-labelledby="epk-press-heading">
           <h2 id="epk-press-heading">Press kit</h2>
+          <p class="epk-download epk-download-top">
+            <a href="epk.pdf" target="_blank" rel="noopener noreferrer">Open PDF in new tab</a> — easier to read on mobile (zoom &amp; scroll)
+          </p>
           <div class="epk-pdf-wrapper">
             <iframe
               src="epk.pdf#toolbar=0&view=FitH"
@@ -355,9 +383,6 @@
             <a href="epk.pdf" download>Download EPK (PDF)</a>
             <span class="epk-download-sep"> · </span>
             <a href="https://drive.google.com/drive/folders/1JtjCUiM47U5o3k5e3rQaAci_sYFiHBKi" target="_blank" rel="noopener noreferrer">Download songs</a>
-          </p>
-          <p class="epk-open-new">
-            <a href="epk.pdf" target="_blank" rel="noopener noreferrer">Open PDF in new tab</a> — easier to read on mobile (zoom &amp; scroll)
           </p>
         </section>
       </div>
@@ -432,6 +457,8 @@
           <a href="/merch">Merch</a>
           <span>|</span>
           <a href="/music">Listen</a>
+          <span>|</span>
+          <a href="/lyrics">Lyrics</a>
           <span>|</span>
           <a href="/about">About</a>
           <span>|</span>
