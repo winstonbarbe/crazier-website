@@ -1,14 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J4NKCFWMC7"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-J4NKCFWMC7"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-      gtag('config', 'G-J4NKCFWMC7');
+      gtag("config", "G-J4NKCFWMC7");
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -137,6 +142,61 @@
         position: relative;
         z-index: 2;
       }
+
+      .shows-list-wrapper {
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        padding: 0 2rem;
+      }
+
+      .shows-list-wrapper h2 {
+        font-family: "Geom", sans-serif;
+        font-size: 2rem;
+        font-weight: 400;
+        margin: 0 0 1.5rem 0;
+        color: #888888;
+      }
+
+      .show-item {
+        font-family: "Geom", sans-serif;
+        color: #888888;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .show-item:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      .show-date {
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+      }
+
+      .show-venue {
+        font-size: 1rem;
+        margin-bottom: 0.35rem;
+      }
+
+      .show-lineup {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: #777;
+      }
+
+      @media (max-width: 900px) {
+        .shows-list-wrapper {
+          padding: 0 1rem;
+        }
+
+        .shows-list-wrapper h2 {
+          font-size: 1.5rem;
+        }
+      }
     </style>
     <script type="application/ld+json">
       {
@@ -171,7 +231,7 @@
       src="https://plausible.io/js/pa-X0oJC14JieIB4wVlXgRJ4.js"
     ></script>
     <script>
-      (window.plausible =
+      ((window.plausible =
         window.plausible ||
         function () {
           (plausible.q = plausible.q || []).push(arguments);
@@ -180,7 +240,7 @@
           plausible.init ||
           function (i) {
             plausible.o = i || {};
-          });
+          }));
       plausible.init();
     </script>
   </head>
@@ -191,6 +251,7 @@
         <a href="/shows">Shows</a>
         <a href="/merch">Merch</a>
         <a href="/music">Listen</a>
+        <a href="/lyrics">Lyrics</a>
         <a href="/about">About</a>
         <a href="#" id="contactButton">Subscribe</a>
       </div>
@@ -324,8 +385,52 @@
     <div class="main">
       <div>
         <div>
-          <div class="newsletter">
+          <div class="shows-list-wrapper">
             <h1 class="visually-hidden">Shows - Crazier</h1>
+            <h2>Upcoming shows</h2>
+            <article class="show-item">
+              <div class="show-date">April 9, 2026</div>
+              <div class="show-venue">Dead Beat Club — Athens, GA</div>
+              <div class="show-lineup">
+                Crazier feat. Julia Barfield w/ Valley of Giants and Mckendrick
+                Bearden
+              </div>
+            </article>
+            <article class="show-item">
+              <div class="show-date">April 10, 2026</div>
+              <div class="show-venue">Firehouse CAC — Birmingham, AL</div>
+              <div class="show-lineup">
+                Crazier w/ Cash Langdon and True Love
+              </div>
+            </article>
+            <article class="show-item">
+              <div class="show-date">April 11, 2026</div>
+              <div class="show-venue">
+                Springwater Supper Club — Nashville, TN
+              </div>
+              <div class="show-lineup">
+                Crazier w/ Joe Kenkel and Make Yourself At Home
+              </div>
+            </article>
+            <article class="show-item">
+              <div class="show-date">April 12, 2026</div>
+              <div class="show-venue">
+                Cherry Street Tavern — Chattanooga, TN
+              </div>
+              <div class="show-lineup">Crazier w/ No Thank You John</div>
+            </article>
+            <article class="show-item">
+              <div class="show-date">April 22, 2026</div>
+              <div class="show-venue">The Kennell — Atlanta, GA</div>
+              <div class="show-lineup">Crazier w/ Bad Cathy</div>
+            </article>
+            <article class="show-item">
+              <div class="show-date">May 24th, 2026</div>
+              <div class="show-venue">Fresh Produce Records — Macon, GA</div>
+              <div class="show-lineup">Crazier</div>
+            </article>
+          </div>
+          <div class="newsletter">
             <h2>We are booking shows now</h2>
             <p>
               Email us to book:
@@ -395,6 +500,7 @@
           <a href="/shows">Shows</a>
           <a href="/merch">Merch</a>
           <a href="/music">Listen</a>
+          <a href="/lyrics">Lyrics</a>
           <a href="/about">About</a>
           <a href="#" class="subscribe-button-mobile">Subscribe</a>
         </div>
