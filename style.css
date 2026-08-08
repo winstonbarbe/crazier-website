@@ -342,22 +342,33 @@ a {
 
   .menu-toggle {
     display: flex;
+    justify-self: end;
+    flex-shrink: 0;
   }
 
   header {
     grid-template-columns: 1fr auto;
     justify-content: space-between;
-    padding: 0.5rem;
+    align-items: center;
+    padding: 0.5rem 1rem;
     margin: 0;
     height: 60px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .center-header {
     justify-self: start;
+    min-width: 0;
+    max-width: calc(100vw - 6rem);
   }
 
   .center-header .logo-image {
-    max-height: 110px;
+    max-height: 65px;
+    max-width: 100%;
+    width: auto;
+    height: auto;
+    display: block;
   }
 
   .mobile-menu-overlay {
@@ -379,6 +390,14 @@ a {
 
 /* Small mobile - stack menu vertically */
 @media (max-width: 460px) {
+  .center-header {
+    max-width: calc(100vw - 5rem);
+  }
+
+  .center-header .logo-image {
+    max-height: 50px;
+  }
+
   .menu-toggle {
     flex-direction: column;
     gap: 0.25rem;
