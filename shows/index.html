@@ -188,6 +188,68 @@
         color: #777;
       }
 
+      .shows-empty {
+        font-family: "Geom", sans-serif;
+        font-size: 1rem;
+        color: #999;
+        margin: 0 0 2rem;
+      }
+
+      .past-shows-section {
+        margin-top: 2rem;
+        text-align: center;
+      }
+
+      .past-shows-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0;
+        border: none;
+        background: none;
+        font-family: "Geom", sans-serif;
+        font-size: 1.35rem;
+        font-weight: 400;
+        color: #888888;
+        cursor: pointer;
+      }
+
+      .past-shows-toggle:hover {
+        color: #666;
+      }
+
+      .past-shows-caret {
+        display: inline-block;
+        width: 0.5rem;
+        height: 0.5rem;
+        border-right: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: rotate(-45deg);
+        transition: transform 0.2s ease;
+        margin-top: -0.15rem;
+      }
+
+      .past-shows-toggle[aria-expanded="true"] .past-shows-caret {
+        transform: rotate(45deg);
+        margin-top: 0.15rem;
+      }
+
+      .past-shows-list {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.35s ease;
+        text-align: left;
+      }
+
+      .past-shows-list.is-open {
+        max-height: 5000px;
+      }
+
+      .past-shows-list .show-item:first-child {
+        margin-top: 1.5rem;
+      }
+
       @media (max-width: 900px) {
         .shows-list-wrapper {
           padding: 0 1rem;
@@ -195,6 +257,10 @@
 
         .shows-list-wrapper h2 {
           font-size: 1.5rem;
+        }
+
+        .past-shows-toggle {
+          font-size: 1.15rem;
         }
       }
     </style>
@@ -388,47 +454,26 @@
           <div class="shows-list-wrapper">
             <h1 class="visually-hidden">Shows - Crazier</h1>
             <h2>Upcoming shows</h2>
-            <article class="show-item">
-              <div class="show-date">April 9, 2026</div>
-              <div class="show-venue">Dead Beat Club — Athens, GA</div>
-              <div class="show-lineup">
-                Crazier feat. Julia Barfield w/ Valley of Giants and Mckendrick
-                Bearden
-              </div>
-            </article>
-            <article class="show-item">
-              <div class="show-date">April 10, 2026</div>
-              <div class="show-venue">Firehouse CAC — Birmingham, AL</div>
-              <div class="show-lineup">
-                Crazier w/ Cash Langdon and True Love
-              </div>
-            </article>
-            <article class="show-item">
-              <div class="show-date">April 11, 2026</div>
-              <div class="show-venue">
-                Springwater Supper Club — Nashville, TN
-              </div>
-              <div class="show-lineup">
-                Crazier w/ Joe Kenkel and Make Yourself At Home
-              </div>
-            </article>
-            <article class="show-item">
-              <div class="show-date">April 12, 2026</div>
-              <div class="show-venue">
-                Cherry Street Tavern — Chattanooga, TN
-              </div>
-              <div class="show-lineup">Crazier w/ No Thank You John</div>
-            </article>
-            <article class="show-item">
-              <div class="show-date">April 22, 2026</div>
-              <div class="show-venue">The Kennell — Atlanta, GA</div>
-              <div class="show-lineup">Crazier w/ Bad Cathy</div>
-            </article>
-            <article class="show-item">
-              <div class="show-date">May 24th, 2026</div>
-              <div class="show-venue">Fresh Produce Records — Macon, GA</div>
-              <div class="show-lineup">Crazier</div>
-            </article>
+            <div id="upcoming-shows"></div>
+
+            <div class="past-shows-section" id="pastShowsSection" hidden>
+              <button
+                class="past-shows-toggle"
+                id="pastShowsToggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="pastShowsList"
+              >
+                <span class="past-shows-caret" aria-hidden="true"></span>
+                Past shows
+              </button>
+              <div
+                class="past-shows-list"
+                id="pastShowsList"
+                role="region"
+                aria-labelledby="pastShowsToggle"
+              ></div>
+            </div>
           </div>
           <div class="newsletter">
             <h2>We are booking shows now</h2>
@@ -726,6 +771,163 @@
     </div>
 
     <script>
+      // Add all shows here — they sort into upcoming or past automatically.
+      const SHOWS = [
+        {
+          date: "2026-04-09",
+          venue: "Dead Beat Club — Athens, GA",
+          lineup:
+            "Crazier feat. Julia Barfield w/ Valley of Giants and Mckendrick Bearden",
+        },
+        {
+          date: "2026-04-10",
+          venue: "Firehouse CAC — Birmingham, AL",
+          lineup: "Crazier w/ Cash Langdon and True Love",
+        },
+        {
+          date: "2026-04-11",
+          venue: "Springwater Supper Club — Nashville, TN",
+          lineup: "Crazier w/ Joe Kenkel and Make Yourself At Home",
+        },
+        {
+          date: "2026-04-12",
+          venue: "Cherry Street Tavern — Chattanooga, TN",
+          lineup: "Crazier w/ No Thank You John",
+        },
+        {
+          date: "2026-04-16",
+          venue: "Viny — Atlanta, GA",
+          lineup: "Crazier supporting Delicate Steve",
+        },
+        {
+          date: "2026-04-22",
+          venue: "The Kennell — Atlanta, GA",
+          lineup:
+            "Crazier w/ Nosebleeds, Harvest Law, and Dolly and the Dollops",
+        },
+        {
+          date: "2026-06-25",
+          venue: "Athefest: Dead Beat Club — Athens, GA",
+          lineup: "Crazier w/ Nick Mallis & the Borealis and Woah Nelly",
+        },
+        {
+          date: "2026-07-19",
+          venue: "The World Famous — Athens, GA",
+          lineup: "Crazier w/ Grocer and Your Ex's Pets",
+        },
+        {
+          date: "2026-08-21",
+          venue: "Snug Harbor — Charlotte, NC",
+          lineup: "Crazier w/ Soft Palm, Paint Fumes, and DJ Scott Weaver",
+        },
+        {
+          date: "2026-08-22",
+          venue: "ETC — Greensboro, NC",
+          lineup:
+            "Crazier w/ Tanner York, Burlap Circus, and O Captain! My Captain!",
+        },
+        {
+          date: "2026-09-04",
+          venue: "The Basement — Nashville, TN",
+          lineup: "Crazier w/ Sophie the Stray and Ol Blue",
+        },
+        {
+          date: "2026-09-05",
+          venue: "Sushi's Storefront",
+          lineup: "Crazier w/ Morgan Powers and Shoulderbird",
+        },
+        {
+          date: "2026-09-06",
+          venue: "Rambling House Music Bar — Columbus, OH",
+          lineup:
+            "Crazier w/ Lydia Loveless & the Everloving Martyrs, Brian Damage, and Steve Tabatowski",
+        },
+      ];
+
+      function parseShowDate(dateStr) {
+        const [year, month, day] = dateStr.split("-").map(Number);
+        return new Date(year, month - 1, day);
+      }
+
+      function formatShowDate(dateStr) {
+        return parseShowDate(dateStr).toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+        });
+      }
+
+      function isPastShow(dateStr) {
+        const showDate = parseShowDate(dateStr);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return showDate < today;
+      }
+
+      function createShowElement(show) {
+        const article = document.createElement("article");
+        article.className = "show-item";
+
+        const dateEl = document.createElement("div");
+        dateEl.className = "show-date";
+        dateEl.textContent = formatShowDate(show.date);
+
+        const venueEl = document.createElement("div");
+        venueEl.className = "show-venue";
+        venueEl.textContent = show.venue;
+
+        const lineupEl = document.createElement("div");
+        lineupEl.className = "show-lineup";
+        lineupEl.textContent = show.lineup;
+
+        article.append(dateEl, venueEl, lineupEl);
+        return article;
+      }
+
+      function renderShows() {
+        const upcomingContainer = document.getElementById("upcoming-shows");
+        const pastContainer = document.getElementById("pastShowsList");
+        const pastSection = document.getElementById("pastShowsSection");
+
+        if (!upcomingContainer || !pastContainer || !pastSection) return;
+
+        const upcoming = SHOWS.filter((show) => !isPastShow(show.date)).sort(
+          (a, b) => parseShowDate(a.date) - parseShowDate(b.date),
+        );
+        const past = SHOWS.filter((show) => isPastShow(show.date)).sort(
+          (a, b) => parseShowDate(b.date) - parseShowDate(a.date),
+        );
+
+        upcomingContainer.replaceChildren(
+          ...upcoming.map((show) => createShowElement(show)),
+        );
+
+        if (upcoming.length === 0) {
+          const empty = document.createElement("p");
+          empty.className = "shows-empty";
+          empty.textContent = "No upcoming shows right now. Check back soon.";
+          upcomingContainer.append(empty);
+        }
+
+        pastContainer.replaceChildren(
+          ...past.map((show) => createShowElement(show)),
+        );
+        pastSection.hidden = past.length === 0;
+      }
+
+      renderShows();
+
+      const pastShowsToggle = document.getElementById("pastShowsToggle");
+      const pastShowsList = document.getElementById("pastShowsList");
+
+      if (pastShowsToggle && pastShowsList) {
+        pastShowsToggle.addEventListener("click", () => {
+          const isOpen = pastShowsToggle.getAttribute("aria-expanded") === "true";
+          pastShowsToggle.setAttribute("aria-expanded", String(!isOpen));
+          pastShowsList.classList.toggle("is-open", !isOpen);
+        });
+      }
+
       const scriptURL =
         "https://script.google.com/macros/s/AKfycby_Gwlt7t80I2JsMBRrl912smKGDqY8wJEt2Fq4dCmexudERTNEfr4y2xI2vHyLzEwW/exec";
 
