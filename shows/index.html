@@ -884,6 +884,15 @@
           lineup: "Crazier w/ DJ Z-Dog and Lazy Horse",
           tickets: "https://www.tickettailor.com/events/crazier/2464382",
         },
+        {
+          date: "2027-02-11",
+          venue: "Heathen's Homecoming: 40 Watt Club — Athens, GA",
+          lineup: "Crazier supporting Drive By Truckers",
+          tickets:
+            "https://www.eventbrite.com/e/2003214611829?aff=oddtdtcreator",
+          // Hidden until 11:00 AM Eastern on October 14, 2026.
+          visibleAt: "2026-10-14T15:00:00Z",
+        },
       ];
 
       function parseShowDate(dateStr) {
@@ -904,6 +913,11 @@
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         return showDate < today;
+      }
+
+      function isShowVisible(show, now = new Date()) {
+        if (!show.visibleAt) return true;
+        return now.getTime() >= new Date(show.visibleAt).getTime();
       }
 
       function createShowElement(show) {
@@ -948,12 +962,13 @@
 
         if (!upcomingContainer || !pastContainer || !pastSection) return;
 
-        const upcoming = SHOWS.filter((show) => !isPastShow(show.date)).sort(
-          (a, b) => parseShowDate(a.date) - parseShowDate(b.date),
-        );
-        const past = SHOWS.filter((show) => isPastShow(show.date)).sort(
-          (a, b) => parseShowDate(b.date) - parseShowDate(a.date),
-        );
+        const visibleShows = SHOWS.filter((show) => isShowVisible(show));
+        const upcoming = visibleShows
+          .filter((show) => !isPastShow(show.date))
+          .sort((a, b) => parseShowDate(a.date) - parseShowDate(b.date));
+        const past = visibleShows
+          .filter((show) => isPastShow(show.date))
+          .sort((a, b) => parseShowDate(b.date) - parseShowDate(a.date));
 
         upcomingContainer.replaceChildren(
           ...upcoming.map((show) => createShowElement(show)),
@@ -973,6 +988,25 @@
       }
 
       renderShows();
+
+      function scheduleHiddenShows() {
+        const now = Date.now();
+        const nextReveal = SHOWS.reduce((soonest, show) => {
+          if (!show.visibleAt) return soonest;
+          const time = new Date(show.visibleAt).getTime();
+          if (Number.isNaN(time) || time <= now) return soonest;
+          return soonest === null || time < soonest ? time : soonest;
+        }, null);
+
+        if (nextReveal === null) return;
+
+        window.setTimeout(() => {
+          renderShows();
+          scheduleHiddenShows();
+        }, nextReveal - now);
+      }
+
+      scheduleHiddenShows();
 
       const pastShowsToggle = document.getElementById("pastShowsToggle");
       const pastShowsList = document.getElementById("pastShowsList");
