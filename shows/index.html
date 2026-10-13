@@ -188,6 +188,21 @@
         color: #777;
       }
 
+      .show-tickets {
+        margin-top: 0.45rem;
+        font-size: 0.95rem;
+      }
+
+      .show-tickets a {
+        color: #888888;
+        text-decoration: underline;
+        text-underline-offset: 0.15em;
+      }
+
+      .show-tickets a:hover {
+        color: #555;
+      }
+
       .shows-empty {
         font-family: "Geom", sans-serif;
         font-size: 1rem;
@@ -867,6 +882,7 @@
           date: "2026-10-24",
           venue: "Sugar After Party: Nowhere Bar — Athens, GA",
           lineup: "Crazier w/ DJ Z-Dog and Lazy Horse",
+          tickets: "https://www.tickettailor.com/events/crazier/2464382",
         },
       ];
 
@@ -907,6 +923,21 @@
         lineupEl.textContent = show.lineup;
 
         article.append(dateEl, venueEl, lineupEl);
+
+        if (show.tickets) {
+          const ticketsEl = document.createElement("div");
+          ticketsEl.className = "show-tickets";
+
+          const ticketsLink = document.createElement("a");
+          ticketsLink.href = show.tickets;
+          ticketsLink.textContent = "Tickets";
+          ticketsLink.target = "_blank";
+          ticketsLink.rel = "noopener noreferrer";
+
+          ticketsEl.append(ticketsLink);
+          article.append(ticketsEl);
+        }
+
         return article;
       }
 
